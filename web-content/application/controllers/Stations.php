@@ -3,6 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Stations extends CI_Controller {
 
+  public function stations_summary(){
+    $data['view']='stations/summary';
+		$this->load->view('layout/content', $data);
+	}
+
   public function show_all_stations(){
     $data['view']='stations/all_stations';
 		$this->load->view('layout/content', $data);

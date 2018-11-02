@@ -6,7 +6,21 @@
 <head>
   <style type="text/css">
     body {
-      background-color: #555;
+      background-color: #242529;
+      color: #93979f;
+      margin: 0;
+      font-family: Verdana;
+
+    }
+    #topnav {
+      padding: 0px 0px 0px 20px;
+    }
+
+    #sidenav {
+      float: left;
+      width: 200px;
+      background-color: #54575f;
+      height: 100vh;
     }
     #sidenav a {
       display: block;
@@ -14,10 +28,21 @@
       text-decoration: none;
       font-family: Consolas;
       color: black;
-      padding: 2px 1px 1px 16px;
+      padding: 4px 1px 4px 16px;
     }
     #sidenav a:hover {
-      background-color: #555;
+      background-color: #242529;
+      color: #93979f;
+    }
+
+    #main {
+      margin-left: 200px;
+      padding-left: 16px;
+
+    }
+
+    .container {
+      border: 1px solid #D0D0D0;
     }
     .top {
         padding: 20px;
@@ -25,13 +50,11 @@
         text-align: center;
     }
     .sidebar {
-        float: left;
-        width: 200px;
-        background-color: #737373;
+
     }
     .content {
         float: left;
-        padding: 10px;
+        padding: 15px;
     }
     .footer {
         text-align: center;
