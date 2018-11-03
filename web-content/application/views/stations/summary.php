@@ -2,9 +2,12 @@
   <h3> Latest readings </h3>
   <div class="container">
     <table id="latest">
-      <tr>
-        <th>Station</th><th>Location</th><th>Type</th><th>Reading</th>
-      </tr>
+      <thread>
+        <tr>
+          <th>Station</th><th>Location</th><th>Type</th><th>Reading</th>
+        </tr>
+      </thread>
+      <tbody>
       <?php
         //foreach ($oppilaat as $r) {
           echo '<tr>';
@@ -15,6 +18,7 @@
           echo '</tr>';
         //}
       ?>
+      </tbody>
     </table>
   </div>
 </div>
