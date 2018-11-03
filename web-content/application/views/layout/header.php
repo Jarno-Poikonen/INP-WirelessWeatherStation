@@ -13,27 +13,31 @@
     }
 
     #topnav{
-      padding: 19px 5px 19px 20px;
+      display: flex;
+      padding: 0px 20px 0px 20px;
+      justify-content: space-between;
+      align-items: center;
     }
-    #topnav a {
+    #topnav h2 {
       font-size: 20px;
-      text-decoration: none;
       color: inherit;
+      display: inline-block;
     }
-    #topnav a.loginbtn {
+    #topnav .loginbtn {
       font-size: 15px;
+      padding: 8px 18px;
       border: 2px solid #995c00;
       border-radius: 2px;
       color: inherit;
-      padding: 8px 18px;
+      float: right;
       background-color: inherit;
     }
-    #topnav a.loginbtn span {
+    #topnav .loginbtn span {
       display: inline-block;
       position: relative;
       transition: 0.5s;
     }
-    #topnav a.loginbtn span:after {
+    #topnav .loginbtn span:after {
       content: '\00bb';
       position: absolute;
       opacity: 0;
@@ -41,19 +45,18 @@
       right: -14px;
       transition: 0.5s;
     }
-    #topnav a.loginbtn:hover span {
+    #topnav .loginbtn:hover span {
       padding-right: 15px;
     }
-    #topnav a.loginbtn:hover span:after {
+    #topnav .loginbtn:hover span:after {
       opacity: 1;
       right: 0;
     }
-
     #sidenav {
       float: left;
       width: 200px;
       background-color: #54575f;
-      height: 100vh;
+      height: 80vh;
     }
     #sidenav a {
       display: block;
@@ -71,9 +74,13 @@
       margin-left: 200px;
       padding: 0px 16px 0px 16px;
     }
-    .right {
-      float: right;
-      vertical-align: middle;
+    .form-popup {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      right: 15px;
+      border: 3px solid #f1f1f1;
+      z-index: 9;
     }
     .container {
       border: 1px solid #D0D0D0;

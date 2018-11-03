@@ -1,6 +1,3 @@
 <div id="topnav" class="container">
-  <a>INP-Weather stations</a>
-  <div class="right">
-    <a href="#login" class="loginbtn"><span>Login</span></a>
-  </div>
+  <h2>INP-Weather stations</h2> <button class="loginbtn"><span>Login</span></a>
 </div>
