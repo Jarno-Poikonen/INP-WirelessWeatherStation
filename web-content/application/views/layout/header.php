@@ -6,14 +6,47 @@
 <head>
   <style type="text/css">
     body {
-      background-color: #242529;
-      color: #93979f;
+      background-color: #1d1d1d;
+      color: #cccccc;
       margin: 0;
       font-family: Verdana;
-
     }
-    #topnav {
-      padding: 0px 0px 0px 20px;
+
+    #topnav{
+      padding: 19px 5px 19px 20px;
+    }
+    #topnav a {
+      font-size: 20px;
+      text-decoration: none;
+      color: inherit;
+    }
+    #topnav a.loginbtn {
+      font-size: 15px;
+      border: 2px solid #995c00;
+      border-radius: 2px;
+      color: inherit;
+      padding: 8px 18px;
+      background-color: inherit;
+    }
+    #topnav a.loginbtn span {
+      display: inline-block;
+      position: relative;
+      transition: 0.5s;
+    }
+    #topnav a.loginbtn span:after {
+      content: '\00bb';
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      right: -14px;
+      transition: 0.5s;
+    }
+    #topnav a.loginbtn:hover span {
+      padding-right: 15px;
+    }
+    #topnav a.loginbtn:hover span:after {
+      opacity: 1;
+      right: 0;
     }
 
     #sidenav {
@@ -31,16 +64,17 @@
       padding: 4px 1px 4px 16px;
     }
     #sidenav a:hover {
-      background-color: #242529;
-      color: #93979f;
+      background-color: #1d1d1d;
+      color: #a0a4ab;
     }
-
     #main {
       margin-left: 200px;
-      padding-left: 16px;
-
+      padding: 0px 16px 0px 16px;
     }
-
+    .right {
+      float: right;
+      vertical-align: middle;
+    }
     .container {
       border: 1px solid #D0D0D0;
     }
