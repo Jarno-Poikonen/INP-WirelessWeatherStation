@@ -20,8 +20,13 @@ class Stations extends CI_Controller {
 	}
 
   public function station_management(){
-    $data['view']='stations/manage_stations';
-    $this->load->view('layout/content', $data);
+    if($_SESSION['loggedIn']==true){
+      $data['view']='stations/manage_stations';
+      $this->load->view('layout/content', $data);
+    }else{
+      $data['view']='errors/no_login';
+      $this->load->view('layout/content', $data);
+    }
   }
 
   public function station_add(){

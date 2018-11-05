@@ -1,7 +1,7 @@
 <div id="main">
   <h3> Latest readings </h3>
-  <div class="container">
-    <table id="latest">
+  <div>
+    <table id="latest" class="dataframe">
       <thread>
         <tr>
           <th>Station</th><th>Location</th><th>Type</th><th>Reading</th>

@@ -11,6 +11,15 @@
       margin: 0;
       font-family: Verdana;
     }
+    .dataframe tr:nth-child(odd) {
+      background-color: #2f3537;
+    }
+    .dataframe tr, td {
+      padding: 5px;
+    }
+    .dataframe th {
+      padding: 5px 10px;
+    }
 
     #topnav{
       display: flex;
@@ -81,7 +90,7 @@
       color: black;
       padding: 4px 1px 4px 16px;
     }
-    #sidenav a:hover {
+    #sidenav a.active, #sidenav a:hover {
       background-color: #1d1d1d;
       color: #a0a4ab;
     }
@@ -89,17 +98,16 @@
       margin-left: 200px;
       padding: 0px 16px 0px 16px;
     }
-
     .container {
       border: 1px solid #D0D0D0;
+    }
+    .grid-container{
+      display: grid;
     }
     .top {
         padding: 20px;
         font-size: 30px;
         text-align: center;
-    }
-    .sidebar {
-
     }
     .content {
         float: left;
@@ -109,17 +117,6 @@
         text-align: center;
         padding: 50px;
     }
-    .active{
-
-    }
     </style>
 </head>
 <body>
-  <script>
-    function openForm() {
-      document.getElementById("loginForm").style.display = "block";
-    }
-    function closeForm() {
-        document.getElementById("loginForm").style.display = "none";
-    }
-</script>
