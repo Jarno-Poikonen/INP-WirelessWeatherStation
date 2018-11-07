@@ -1,38 +1,13 @@
 <div id="main">
   <div class="space-out">
-    <table>
-      <thread>
-        <tr>
-          <th>Miksi tämä menee tähän?</th>
-        </tr>
-      </thread>
-      <tbody>
-        <?php
-           //foreach ($measurements as $m) {
-             echo '<tr>';
-             echo '<td>asd</td>';
-             echo '</tr>';
-           //}
-           ?>
-      </tbody>
-    </table>
-
-    <table>
-      <thread>
-        <tr>
-          <th>Measurements done</th>
-        </tr>
-      </thread>
-      <tbody>
-        <?php
-           //foreach ($measurements as $m) {
-             echo '<tr>';
-             echo '<td>placeholder</td>';
-             echo '</tr>';
-           //}
-           ?>
-      </tbody>
-    </table>
+    <div style="text-align: center">
+      <h4>Number of stations</h4>
+      <?php echo '<h1>X</h1>'?>
+    </div>
+    <div style="text-align: center">
+    <h4>Measurements done</h4>
+      <?php echo '<h1>X</h1>'?>
+    </div>
   </div>
   <h3> Latest readings </h3>
   <div>
