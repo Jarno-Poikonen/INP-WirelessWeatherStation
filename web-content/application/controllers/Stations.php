@@ -3,7 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Stations extends CI_Controller {
   public function stations_summary(){
+    $this->load->model('Station_model');
     $data['view']='stations/summary';
+    $data['measurements'] = $this->Station_model->get_recent_measurements();
 		$this->load->view('layout/content', $data);
 	}
 

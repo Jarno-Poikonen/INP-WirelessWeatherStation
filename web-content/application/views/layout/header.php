@@ -98,6 +98,9 @@
       margin-left: 200px;
       padding: 0px 16px 0px 16px;
     }
+    .failed {
+      border-color: red;
+    }
     .container {
       border: 1px solid #D0D0D0;
     }

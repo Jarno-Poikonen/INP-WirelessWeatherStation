@@ -10,7 +10,7 @@
       <?php
          foreach ($a_stations as $s) {
            echo '<tr>';
-           echo '<td>'.$s['stations_id'].'</td>';
+           echo '<td>'.$s['idStation'].'</td>';
            echo '<td>'.$s['designation'].'</td>';
            echo '<td>'.$s['location'].'</td>';
            echo '</tr>';
