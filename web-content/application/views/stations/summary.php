@@ -1,4 +1,39 @@
 <div id="main">
+  <div class="space-out">
+    <table>
+      <thread>
+        <tr>
+          <th>Miksi tämä menee tähän?</th>
+        </tr>
+      </thread>
+      <tbody>
+        <?php
+           //foreach ($measurements as $m) {
+             echo '<tr>';
+             echo '<td>asd</td>';
+             echo '</tr>';
+           //}
+           ?>
+      </tbody>
+    </table>
+
+    <table>
+      <thread>
+        <tr>
+          <th>Measurements done</th>
+        </tr>
+      </thread>
+      <tbody>
+        <?php
+           //foreach ($measurements as $m) {
+             echo '<tr>';
+             echo '<td>placeholder</td>';
+             echo '</tr>';
+           //}
+           ?>
+      </tbody>
+    </table>
+  </div>
   <h3> Latest readings </h3>
   <div>
     <table id="latest" class="dataframe">

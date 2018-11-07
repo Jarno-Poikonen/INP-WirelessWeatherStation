@@ -13,6 +13,7 @@
            echo '<td>'.$s['idStation'].'</td>';
            echo '<td>'.$s['designation'].'</td>';
            echo '<td>'.$s['location'].'</td>';
+           echo '<td>'.$s['latitude'].','.$s['longitude'].'</td>';
            echo '</tr>';
          }
          ?>

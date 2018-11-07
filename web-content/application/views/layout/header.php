@@ -95,13 +95,13 @@
       color: #a0a4ab;
     }
     #main {
-      margin-left: 200px;
+      float: left;
       padding: 0px 16px 0px 16px;
     }
     .failed {
       border-color: red;
     }
-    .container {
+    .container{
       border: 1px solid #D0D0D0;
     }
     .grid-container{
@@ -111,6 +111,11 @@
         padding: 20px;
         font-size: 30px;
         text-align: center;
+    }
+    .space-out{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     .content {
         float: left;
