@@ -5,11 +5,21 @@
     <title>INP weatherstations</title>
 <head>
   <style type="text/css">
+   @font-face {
+      font-family: "Verdana";
+      src: url(../../../fonts/Verdana.woff) format('woff');
+      src: local("Verdana")
+    }
+    @font-face {
+       font-family: "Consolas";
+       src: url(../../../fonts/Consolas.woff) format('woff');
+       src: local("Consolas")
+     }
     body {
       background-color: #1d1d1d;
       color: #cccccc;
       margin: 0;
-      font-family: Verdana;
+      font-family: "Verdana";
     }
     .dataframe tr:nth-child(odd) {
       background-color: #2f3537;
@@ -86,7 +96,7 @@
       display: block;
       font-size: 20px;
       text-decoration: none;
-      font-family: Consolas;
+      font-family: "Consolas";
       color: black;
       padding: 4px 1px 4px 16px;
     }
@@ -98,14 +108,51 @@
       float: left;
       padding: 0px 16px 0px 16px;
     }
-    .failed {
-      border-color: red;
+    .tab-container{
+      position: relative;
+      min-height: 200px;
+      clear: both;
+      margin: 25px 0;
+    }
+    .tab {
+      float:left;
+    }
+    .tab label {
+      background: #54575f;
+      padding: 10px;
+      border: 1px solid #ccc;
+      margin-left: -1px;
+      position: relative;
+      left: 1px;
+    }
+    .tab [type=radio] {
+      display: none;
+    }
+    .tab-content {
+      position: absolute;
+      top: 28px;
+      left: 0;
+      background: #1d1d1d;
+      right: 0;
+      bottom: 0;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+    [type=radio]:checked ~ label {
+    background: #1d1d1d;
+    border-bottom: 0px solid white;
+    z-index: 2;
+    }
+    [type=radio]:checked ~ label ~ .tab-content {
+    z-index: 1;
     }
     .container{
       border: 1px solid #D0D0D0;
     }
-    .grid-container{
-      display: grid;
+    .button-grey{
+      background-color: #54575f;
+      border: 0px;
+      padding: 8px 14px;
     }
     .top {
         padding: 20px;
