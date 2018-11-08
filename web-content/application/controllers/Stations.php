@@ -46,5 +46,18 @@ class Stations extends CI_Controller {
     $this->Station_model->add_station_to_database($dataToAdd);
     redirect ('stations/stations_summary');
   }
+
+  public function station_remove(){
+    $this->load->model('Login_model');
+    if ($this->Login_model->verify_password($_SESSION['user'])) {
+      $this->load->model('Station_model');
+      $id = $this->input->post('id');
+      $this->Station_model->remove_station_from_database($id);
+      redirect($_SERVER['HTTP_REFERER']);
+    } else {
+      echo "<p> nope</p>";
+    }
+  }
+
 }
 ?>

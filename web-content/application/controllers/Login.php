@@ -1,16 +1,12 @@
 <?php
-
+defined('BASEPATH') OR exit('No direct script access allowed');
 class Login extends CI_Controller{
 
   public function siteLogin(){
     $this->load->model('Login_model');
-    $credentials['uname'] = $this->input->post('loginID');
-    //$credentials['pw'] = $this->input->post('loginPw');
-    if (!empty($this->Login_model->get_password($credentials)[0]['password'])){
-      if (password_verify($this->input->post('loginPw'), $this->Login_model->get_password($credentials)[0]['password'])) {
-        $_SESSION['user']=$this->input->post('loginID');
-        $_SESSION['loggedIn']=true;
-      }
+    if ($this->Login_model->verify_password($this->input->post('loginID'))){
+      $_SESSION['user']=$this->input->post('loginID');
+      $_SESSION['loggedIn']=true;
     }
     redirect($_SERVER['HTTP_REFERER']);
   }

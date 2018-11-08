@@ -15,6 +15,13 @@
        src: local(Consolas),
             url(../../../fonts/Consolas.woff) format('woff');
      }
+    [type=submit] {
+      background-color: inherit;
+      color: inherit;
+      border-style: solid;
+      border-color: #54575f;
+      padding: 3px 7px
+    }
     body {
       background-color: #1d1d1d;
       color: #cccccc;
@@ -119,7 +126,7 @@
     }
     .tab label {
       background: #54575f;
-      padding: 10px;
+      padding: 10px 17px;
       border: 1px solid #ccc;
       margin-left: -1px;
       position: relative;
@@ -170,6 +177,9 @@
     .content {
         float: left;
         padding: 15px;
+    }
+    .button-danger {
+
     }
     .footer {
         text-align: center;

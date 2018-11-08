@@ -30,7 +30,14 @@
       <input type="radio" id="tab-3" name="tab-group1">
       <label for="tab-3">Remove station</label>
       <div class="tab-content">
-        <p>Station remove ph</p>
+        <form action="<?php echo site_url('stations/station_remove'); ?>" method="post">
+          <table>
+              <tr><td>Id to remove </td><td><input type="text" name="id" required></td><td><input type="submit" value="Remove"></td></tr>
+          </table>
+          <p style="color:red">Note that removing a station removes ALL DATA related to it.<br>
+          Verify with your password below</p>
+          <input type="password" name="loginPw" required></td>
+        </form>
       </div>
     </div>
 

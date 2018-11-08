@@ -20,5 +20,9 @@ class Station_model extends CI_Model{
     $this->db->set($stationInfo);
     $this->db->insert('stations');
   }
+  public function remove_station_from_database($stationId){
+    $this->db->where('idStation', $stationId);
+    $this->db->delete('stations');
+  }
 }
 ?>
