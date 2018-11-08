@@ -7,13 +7,13 @@
   <style type="text/css">
    @font-face {
       font-family: "Verdana";
-      src: url(../../../fonts/Verdana.woff) format('woff');
-      src: local("Verdana")
+      src: local(Verdana),
+           url(../../../fonts/Verdana.woff) format('woff');
     }
     @font-face {
        font-family: "Consolas";
-       src: url(../../../fonts/Consolas.woff) format('woff');
-       src: local("Consolas")
+       src: local(Consolas),
+            url(../../../fonts/Consolas.woff) format('woff');
      }
     body {
       background-color: #1d1d1d;
@@ -124,27 +124,30 @@
       margin-left: -1px;
       position: relative;
       left: 1px;
+      color: black;
     }
     .tab [type=radio] {
       display: none;
     }
     .tab-content {
+      display: none;
       position: absolute;
       top: 28px;
       left: 0;
       background: #1d1d1d;
-      right: 0;
-      bottom: 0;
+      right: -1px;
       padding: 20px;
       border: 1px solid #ccc;
     }
     [type=radio]:checked ~ label {
     background: #1d1d1d;
+    color: #cccccc;
     border-bottom: 0px solid white;
     z-index: 2;
     }
     [type=radio]:checked ~ label ~ .tab-content {
-    z-index: 1;
+
+    display: flex;
     }
     .container{
       border: 1px solid #D0D0D0;
