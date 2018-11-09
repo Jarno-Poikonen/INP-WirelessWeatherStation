@@ -24,5 +24,16 @@ class Station_model extends CI_Model{
     $this->db->where('idStation', $stationId);
     $this->db->delete('stations');
   }
+  public function modify_station_in_database($data, $stationId){
+    $this->db->where('idStation', $stationId);
+    $this->db->update('stations', $data);
+  }
+  public function testquery(){
+    $this->db->select('idMeasurement, reading');
+    $this->db->from('measurements');
+    return $this->db->get()->result_array();
+  }
+
+
 }
 ?>

@@ -10,9 +10,8 @@ class Login_model extends CI_Model{
   }
 
   public function verify_password($uname){
-    $this->get_password($uname);
-    if (!empty($this->Login_model->get_password($_SESSION['user'])[0]['password'])){
-      if (password_verify($this->input->post('loginPw'), $this->Login_model->get_password($_SESSION['user'])[0]['password'])) {
+    if (!empty($this->Login_model->get_password($uname)[0]['password'])){
+      if (password_verify($this->input->post('loginPw'), $this->Login_model->get_password($uname)[0]['password'])) {
         return true;
       }
     }

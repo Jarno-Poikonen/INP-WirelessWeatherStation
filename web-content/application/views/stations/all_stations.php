@@ -3,7 +3,7 @@
   <table class="dataframe">
     <thread>
       <tr>
-        <th>ID</th><th>Designation</th><th>Location</th><th>coordinates</th>
+        <th>ID</th><th>Designation</th><th>Location</th><th>coordinates</th><th>Show on map</th>
       </tr>
     </thread>
     <tbody>

@@ -38,13 +38,25 @@ class Stations extends CI_Controller {
   public function station_add(){
     $this->load->model('Station_model');
     $dataToAdd=array(
-        "designation"=>$this->input->post('des'),
-        "location"=>$this->input->post('loc'),
-        "latitude"=>$this->input->post('lat'),
-        "longitude"=>$this->input->post('lon')
+        "designation" =>$this->input->post('des'),
+        "location"    =>$this->input->post('loc'),
+        "latitude"    =>$this->input->post('lat'),
+        "longitude"   =>$this->input->post('lon')
     );
     $this->Station_model->add_station_to_database($dataToAdd);
-    redirect ('stations/stations_summary');
+    redirect("Stations/show_all_stations");
+  }
+
+  public function station_modify(){
+    $this->load->model('Station_model');
+    $id = $this->input->post("id");
+    foreach (array_slice($this->input->post(), 1) as $key => $value) {
+      if (!empty($value)){
+        $dataToAdd[$key] = $value;
+      }
+    }
+    $this->Station_model->modify_station_in_database($dataToAdd, $id);
+    redirect("Stations/show_all_stations");
   }
 
   public function station_remove(){
@@ -53,10 +65,17 @@ class Stations extends CI_Controller {
       $this->load->model('Station_model');
       $id = $this->input->post('id');
       $this->Station_model->remove_station_from_database($id);
-      redirect($_SERVER['HTTP_REFERER']);
+      redirect("Stations/show_all_stations");
     } else {
       echo "<p> nope</p>";
     }
+  }
+  public function data_visualization(){
+    $this->load->model('Station_model');
+    $data['toVisualize'] = $this->Station_model->testquery();
+    $data['selected']="visualization";
+    $data['view']='stations/visualization';
+		$this->load->view('layout/content', $data);
   }
 
 }

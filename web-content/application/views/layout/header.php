@@ -3,7 +3,6 @@
   <head>
     <meta charset="utf-8">
     <title>INP weatherstations</title>
-<head>
   <style type="text/css">
    @font-face {
       font-family: "Verdana";
@@ -126,8 +125,7 @@
     }
     .tab label {
       background: #54575f;
-      padding: 10px 17px;
-      border: 1px solid #ccc;
+      padding: 10px 15px;
       margin-left: -1px;
       position: relative;
       left: 1px;
@@ -139,21 +137,18 @@
     .tab-content {
       display: none;
       position: absolute;
-      top: 28px;
+      top: 29px;
       left: 0;
       background: #1d1d1d;
       right: -1px;
       padding: 20px;
-      border: 1px solid #ccc;
     }
     [type=radio]:checked ~ label {
     background: #1d1d1d;
     color: #cccccc;
-    border-bottom: 0px solid white;
     z-index: 2;
     }
     [type=radio]:checked ~ label ~ .tab-content {
-
     display: flex;
     }
     .container{
@@ -163,6 +158,9 @@
       background-color: #54575f;
       border: 0px;
       padding: 8px 14px;
+    }
+    .warn{
+      color:red;
     }
     .top {
         padding: 20px;
@@ -186,5 +184,7 @@
         padding: 50px;
     }
     </style>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>
