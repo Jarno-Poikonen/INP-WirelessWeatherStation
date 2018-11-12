@@ -185,6 +185,7 @@
     }
     </style>
     <!--Load the AJAX API-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body>

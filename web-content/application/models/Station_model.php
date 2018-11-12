@@ -28,12 +28,11 @@ class Station_model extends CI_Model{
     $this->db->where('idStation', $stationId);
     $this->db->update('stations', $data);
   }
-  public function testquery(){
-    $this->db->select('idMeasurement, reading');
+  public function testquery($stationId){
+    $this->db->select('timestamp, reading');
     $this->db->from('measurements');
+    $this->db->where('stations_idStation', $stationId);
     return $this->db->get()->result_array();
   }
-
-
 }
 ?>

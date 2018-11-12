@@ -52,10 +52,10 @@ class Stations extends CI_Controller {
     $id = $this->input->post("id");
     foreach (array_slice($this->input->post(), 1) as $key => $value) {
       if (!empty($value)){
-        $dataToAdd[$key] = $value;
+        $newData[$key] = $value;
       }
     }
-    $this->Station_model->modify_station_in_database($dataToAdd, $id);
+    $this->Station_model->modify_station_in_database($newData, $id);
     redirect("Stations/show_all_stations");
   }
 
@@ -72,7 +72,8 @@ class Stations extends CI_Controller {
   }
   public function data_visualization(){
     $this->load->model('Station_model');
-    $data['toVisualize'] = $this->Station_model->testquery();
+    $stationId=$this->input->post('id');
+    $data['toVisualize'] = $this->Station_model->testquery($stationId);
     $data['selected']="visualization";
     $data['view']='stations/visualization';
 		$this->load->view('layout/content', $data);
