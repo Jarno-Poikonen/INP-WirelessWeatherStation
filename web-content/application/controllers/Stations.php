@@ -71,13 +71,24 @@ class Stations extends CI_Controller {
     }
   }
   public function data_visualization(){
-    $this->load->model('Station_model');
-    $stationId=$this->input->post('id');
-    $data['toVisualize'] = $this->Station_model->testquery($stationId);
+    //$this->load->model('Station_model');
+    //$queryParams['id']=$this->input->post('id');
+    //$queryParams['start']=$this->input->post('start');
+    //$queryParams['end']=$this->input->post('end');
+    //$meastypeId=$this->input->post('types');
+    //$data['toVisualize'] = $this->Station_model->get_measurement_type_by_id($queryParams, $meastypeId);
     $data['selected']="visualization";
     $data['view']='stations/visualization';
 		$this->load->view('layout/content', $data);
   }
-
+  public function ajaxtest(){
+    $this->load->model('Station_model');
+    $queryParams['id']=$this->input->post('id');
+    $queryParams['start']=$this->input->post('start');
+    $queryParams['end']=$this->input->post('end');
+    $meastypeId=$this->input->post('types');
+    $data = $this->Station_model->get_measurement_type_by_id($queryParams, $meastypeId);
+    print_r(json_encode($data, true));
+  }
 }
 ?>

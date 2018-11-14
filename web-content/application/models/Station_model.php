@@ -13,6 +13,8 @@ class Station_model extends CI_Model{
     $this->db->join('sensors', 'measurements.sensors_idSensor = sensors.idSensor');
     $this->db->join('stations', 'measurements.stations_idStation = stations.idStation');
     $this->db->from('measurements');
+    $this->db->order_by("idMeasurement", "desc");
+    $this->db->limit(10);
     return $this->db->get()->result_array();
   }
 
@@ -28,10 +30,17 @@ class Station_model extends CI_Model{
     $this->db->where('idStation', $stationId);
     $this->db->update('stations', $data);
   }
-  public function testquery($stationId){
+
+  public function get_measurement_type_by_id($queryParams, $id){
     $this->db->select('timestamp, reading');
     $this->db->from('measurements');
-    $this->db->where('stations_idStation', $stationId);
+    $this->db->where('stations_idStation', $queryParams['id']);
+    if (!empty($queryParams['start']) && !empty($queryParams['end'])){
+      $this->db->where('timestamp >=', $queryParams['start']);
+      $this->db->where('timestamp <=', $queryParams['end']);
+    }
+    $this->db->where('sensors_idSensor', $id);
+    //echo json_encode($this->db->get()->result_array());
     return $this->db->get()->result_array();
   }
 }
