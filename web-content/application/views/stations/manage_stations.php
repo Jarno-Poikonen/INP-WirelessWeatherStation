@@ -8,8 +8,9 @@
       <div class="tab-content">
         <form action="<?php echo site_url('stations/station_add'); ?>" method="post">
          <table>
-             <tr><td>Designation</td><td><input type="text" name="des" required></td></tr>
-             <tr><td>Location</td><td><input type="text" name="loc" required></td></tr>
+             <tr><td>Designation</td><td><input type="text" name="desig" required></td></tr>
+             <tr><td>Region</td><td><input type="text" name="city" required></td></tr>
+             <tr><td>Description</td><td><input type="text" name="descr" required></td></tr>
              <tr><td>Latitude</td><td><input type="text" name="lat"></td></tr>
              <tr><td>Longitude</td><td><input type="text" name="lon"></td></tr>
              <tr><td></td><td><input type="submit" value="Add"></td></tr>
@@ -28,9 +29,10 @@
           To preserve old value, leave field empty.
          <table>
              <tr><td>Designation</td><td><input type="text" name="designation"></td></tr>
-             <tr><td>Location</td><td><input type="text" name="location"></td></tr>
+             <tr><td>Region</td><td><input type="text" name="city"></td></tr>
              <tr><td>Latitude</td><td><input type="text" name="latitude"></td></tr>
              <tr><td>Longitude</td><td><input type="text" name="longitude"></td></tr>
+             <tr><td>Description</td><td><input type="text" name="description"></td></tr>
              <tr><td></td><td><input type="submit" value="Modify"></td></tr>
          </table>
         </form>

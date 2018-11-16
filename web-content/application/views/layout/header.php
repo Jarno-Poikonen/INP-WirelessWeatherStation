@@ -21,7 +21,8 @@
       border-color: #54575f;
       padding: 3px 7px
     }
-    body {
+    html, body {
+      height: 100%;
       background-color: #1d1d1d;
       color: #cccccc;
       margin: 0;
@@ -93,10 +94,7 @@
       right: 0;
     }
     #sidenav {
-      float: left;
       width: 200px;
-      background-color: #54575f;
-      height: 80vh;
     }
     #sidenav a {
       display: block;
@@ -111,7 +109,8 @@
       color: #a0a4ab;
     }
     #main {
-      float: left;
+      position: absolute;
+      left:200px;
       padding: 0px 16px 0px 16px;
     }
     .tab-container{
@@ -180,11 +179,12 @@
 
     }
     .footer {
+        position: absolute;
+        bottom: 0px;
         text-align: center;
-        padding: 50px;
+        padding: 10px;
     }
     </style>
-    <!--Load the AJAX API-->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 </head>
 <body>

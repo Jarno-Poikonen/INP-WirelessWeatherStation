@@ -8,13 +8,34 @@ class Station_model extends CI_Model{
     return $this->db->get()->result_array();
   }
 
+  public function get_station_count(){
+    $this->db->from("stations");
+    return $this->db->count_all_results();
+  }
+  public function get_measurement_count(){
+    $this->db->select_max('idMeasurement');
+    $this->db->from("measurements");
+    return $this->db->get()->row()->idMeasurement;
+  }
+
   public function get_recent_measurements(){
-    $this->db->select('designation, location, type, reading, timestamp');
-    $this->db->join('sensors', 'measurements.sensors_idSensor = sensors.idSensor');
-    $this->db->join('stations', 'measurements.stations_idStation = stations.idStation');
+    $this->db->select('designation, city, timestamp, temperature, humidity, pressure, illuminance');
+    $this->db->join('stations', 'measurements.idStation = stations.idStation');
     $this->db->from('measurements');
     $this->db->order_by("idMeasurement", "desc");
     $this->db->limit(10);
+    return $this->db->get()->result_array();
+  }
+  public function search_stations_from_database($queryParams){
+    $this->db->select('*');
+    $this->db->from('stations');
+    foreach ($queryParams as $k => $v){
+      if (!empty($v)){
+        $this->db->where($k, $v);
+      }
+    }
+    //$this->db->get()->result_array(); //debug
+    //echo $this->db->last_query(); //debug
     return $this->db->get()->result_array();
   }
 
@@ -31,16 +52,21 @@ class Station_model extends CI_Model{
     $this->db->update('stations', $data);
   }
 
-  public function get_measurement_type_by_id($queryParams, $id){
-    $this->db->select('timestamp, reading');
+  public function get_measurement_by_station_id($queryParams){
+    $this->db->select('*');
     $this->db->from('measurements');
-    $this->db->where('stations_idStation', $queryParams['id']);
+    $this->db->where('idStation', $queryParams['id']);
     if (!empty($queryParams['start']) && !empty($queryParams['end'])){
       $this->db->where('timestamp >=', $queryParams['start']);
       $this->db->where('timestamp <=', $queryParams['end']);
+    } else {
+      $now = mdate('%Y-%m-%d', now());
+      $then = mdate('%Y-%m-%d', now()-(7*86400));
+      $this->db->where('timestamp >=', $then);
+      $this->db->where('timestamp <=', $now);
     }
-    $this->db->where('sensors_idSensor', $id);
-    //echo json_encode($this->db->get()->result_array());
+    //$this->db->get()->result_array();
+    //echo $this->db->last_query();
     return $this->db->get()->result_array();
   }
 }
