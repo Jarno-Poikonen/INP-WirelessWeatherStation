@@ -39,19 +39,6 @@ class Station_model extends CI_Model{
     return $this->db->get()->result_array();
   }
 
-  public function add_station_to_database($stationInfo){
-    $this->db->set($stationInfo);
-    $this->db->insert('stations');
-  }
-  public function remove_station_from_database($stationId){
-    $this->db->where('idStation', $stationId);
-    $this->db->delete('stations');
-  }
-  public function modify_station_in_database($data, $stationId){
-    $this->db->where('idStation', $stationId);
-    $this->db->update('stations', $data);
-  }
-
   public function get_measurement_by_station_id($queryParams){
     $this->db->select('*');
     $this->db->from('measurements');
@@ -60,13 +47,11 @@ class Station_model extends CI_Model{
       $this->db->where('timestamp >=', $queryParams['start']);
       $this->db->where('timestamp <=', $queryParams['end']);
     } else {
-      $now = mdate('%Y-%m-%d', now());
       $then = mdate('%Y-%m-%d', now()-(7*86400));
+      $now = mdate('%Y-%m-%d', now());
       $this->db->where('timestamp >=', $then);
       $this->db->where('timestamp <=', $now);
     }
-    //$this->db->get()->result_array();
-    //echo $this->db->last_query();
     return $this->db->get()->result_array();
   }
 }

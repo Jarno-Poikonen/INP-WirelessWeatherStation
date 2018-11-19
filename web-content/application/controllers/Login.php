@@ -7,6 +7,7 @@ class Login extends CI_Controller{
     if ($this->Login_model->verify_password($this->input->post('loginID'))){
       $_SESSION['user']=$this->input->post('loginID');
       $_SESSION['loggedIn']=true;
+      redirect('Management/station_management');
     }
     redirect($_SERVER['HTTP_REFERER']);
   }
