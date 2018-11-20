@@ -1,9 +1,7 @@
-#include <cstdio>
-#include <cmath>
 #include <cstdint>
 
 // ldr must have 215.2ohm resistor in series with a voltage supply of 4V
-float LDR_4V(uint16_t millivolts){
+float LDR_4V_215_2R(uint16_t millivolts){
   const float coefficents[] = {
   	0,
   	1,
