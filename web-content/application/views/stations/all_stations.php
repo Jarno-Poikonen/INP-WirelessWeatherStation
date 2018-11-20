@@ -2,23 +2,20 @@
 <script type="text/javascript">
   google.charts.load('current', { 'packages': ['map'] });
   //google.charts.setOnLoadCallback(drawMap);
-  function drawMap(asd) {
-    console.log(asd);
-    var array = asd.split(",");
-    var eka = parseFloat(array[0]);
-    var toka = parseFloat(array[1]);
-    console.log(eka);
-    console.log(toka);
+  function drawMap(coordinates, stationId) {
+    var array = coordinates.split(",");
+    var latitude = parseFloat(array[0]);
+    var longitude = parseFloat(array[1]);
     var data = new google.visualization.DataTable();
       data.addColumn('number', 'Lat');
       data.addColumn('number', 'Long');
       data.addColumn('string', 'Name');
-      data.addRow([eka, toka, "ASD"]);
+      data.addRow([latitude, longitude, stationId]);
 
     var options = {
       showTooltip: true,
       showInfoWindow: true,
-      zoomLevel:16
+      zoomLevel:11
     };
 
     var map = new google.visualization.Map(document.getElementById('map_div'));
@@ -27,9 +24,9 @@
   };
 </script>
 
-<div id="main">
+<div id="main" style="width:80%;">
   <p> Stations  </p>
-  <table class="dataframe">
+  <table class="dataframe" style="vertical-align: top; display:inline-block">
     <thread>
       <tr>
         <th>ID</th><th>Designation</th><th>Region</th><th>Description</th><th>Coordinates</th><th>Show on map</th>
@@ -44,11 +41,11 @@
            echo '<td>'.$s['city'].'</td>';
            echo '<td>'.$s['description'].'</td>';
            echo '<td>'.$s['latitude'].','.$s['longitude'].'</td>';
-           echo '<th> <button id="'.$s['latitude'].','.$s['longitude'].'" onclick="drawMap(this.id)">Show</button>';
+           echo '<th> <button class="'.$s['latitude'].','.$s['longitude'].'" onclick="drawMap(this.className, this.id)">Show</button>';
            echo '</tr>';
          }
          ?>
     </tbody>
   </table>
-<div id="map_div"></div>
+<div id="map_div" style="display:inline-block"></div>
 </div>

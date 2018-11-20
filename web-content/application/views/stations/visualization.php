@@ -26,18 +26,23 @@
     // ===============
     // CHART OPTIONS
     // ===============
-    var myOptions = {
-      chartArea : {width:'90%', height:'85%'},
-      backgroundColor: 'transparent',
-      colors:['orange','green', 'purple', 'blue'],
+    //Options for the myDateSlider. Also acts as default for charts if not overwritten
+    var defaults = {
+      colors:['#b52c15','#00485e', '#442151','#383700'],
       vAxes: {
-        0:{title: "Temperature", gridlines: {count: 5}},
-        1:{title: "Illuminance",  gridlines: {count: 5, color: 'transparent'}},
+        0:{gridlines: {count: 5}},
+        1:{gridlines: {count: 5, color: 'transparent'}},
+        2:{gridlines: {count: 5, color: 'transparent'}},
+        3:{gridlines: {count: 5, color: 'transparent'}},
       },
       series: {
         0: {type: 'line', targetAxisIndex: 0},
-        1: {type: 'line', targetAxisIndex: 1}
+        1: {type: 'line', targetAxisIndex: 1},
+        2: {type: 'line', targetAxisIndex: 2},
+        3: {type: 'line', targetAxisIndex: 3}
       },
+      chartArea : {width:'90%', height:'85%'},
+      backgroundColor: 'transparent',
       hAxis: {
         gridlines: {
           color: 'grey'
@@ -71,19 +76,33 @@
       }
     }
 
-    var overrides={
-      colors:['blue', 'purple'],
+    var chart1 = {
+      colors:['#b52c15','#283800'],
+      vAxes: {
+        0:{title: "Temperature", gridlines: {count: 5}},
+        1:{title: "Illuminance",  gridlines: {count: 5, color: 'transparent'}},
+      },
+      series: {
+        0: {type: 'line', targetAxisIndex: 0, enableInteractivity: true},
+        1: {type: 'bars', targetAxisIndex: 1, enableInteractivity: true, dataOpacity: 0.7}
+      },
+      bar: {groupWidth:"100%"}
+    }
+    var chart2={
+      colors:['#00485e', '#442151'],
       vAxes: {
         0:{title: "Humidity", gridlines: {count: 5}},
         1:{title: "Pressure",  gridlines: {count: 5, color: 'transparent'}},
       },
       series: {
-        0: {type: 'line', targetAxisIndex: 0},
-        1: {type: 'bars', targetAxisIndex: 1}
+        0: {type: 'line', targetAxisIndex: 0, enableInteractivity: true, dataOpacity: 0.8},
+        1: {type: 'bars', targetAxisIndex: 1, enableInteractivity: true, dataOpacity: 0.7}
       },
+      bar: {groupWidth:"100%"}
     }
 
-    var line2opts = $.extend({}, myOptions, overrides);
+    var chart1opts = $.extend({}, defaults, chart1);
+    var chart2opts = $.extend({}, defaults, chart2);
 
     var myDashboard = new google.visualization.Dashboard(document.getElementById('dashboard_div'));
 
@@ -93,44 +112,48 @@
       'options': {
         'filterColumnLabel': 'Date',
         ui: {
-          chartOptions: myOptions
+          chartOptions: defaults
         }
       }
     });
-    var myLine = new google.visualization.ChartWrapper({
+    var myChart = new google.visualization.ChartWrapper({
       view: {'columns': [0,1,4]},
       chartType : 'ComboChart',
       containerId : 'line_div',
-      options : myOptions
+      options : chart1opts
     });
-    var myLine2 = new google.visualization.ChartWrapper({
+    var myChart2 = new google.visualization.ChartWrapper({
       view: {'columns': [0,2,3]},
       chartType : 'LineChart',
       containerId : 'line2_div',
-      options : line2opts
+      options : chart2opts
     });
     // Bind myLine to the dashboard, and to the controls
     // this will make sure our line chart is update when our date changes
-    myDashboard.bind(myDateSlider, [myLine, myLine2]);
+    myDashboard.bind(myDateSlider, [myChart, myChart2]);
     myDashboard.draw(data);
 
     var hideTemp = document.getElementById("chkbox_tmp");
     hideTemp.onclick = function(){
       view = new google.visualization.DataView(data);
       if (this.checked){
-        myOptions.series[0].lineWidth = 2.0;
+        chart1.series[0].lineWidth = 2.0;
+        chart1.series[0].enableInteractivity = true;
       } else {
-        myOptions.series[0].lineWidth = 0.0;
+        chart1.series[0].lineWidth = 0.0;
+        chart1.series[0].enableInteractivity = false;
       }
       myDashboard.draw(view);
     }
-    var hideHum = document.getElementById("chkbox_hum");
-    hideHum.onclick = function(){
+    var hideIllu = document.getElementById("chkbox_hum");
+    hideIllu.onclick = function(){
       view = new google.visualization.DataView(data);
       if (this.checked){
-        myOptions.series[1].lineWidth = 2.0;
+        chart1.series[1].dataOpacity = 0.7;
+        chart1.series[1].enableInteractivity = true;
       } else {
-        myOptions.series[1].lineWidth = 0.0;
+        chart1.series[1].dataOpacity = 0.0;
+        chart1.series[1].enableInteractivity = false;
       }
       myDashboard.draw(view);
     }

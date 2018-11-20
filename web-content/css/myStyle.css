@@ -129,10 +129,16 @@
    margin-left: -1px;
    position: relative;
    left: 1px;
+   z-index: 1;
    color: black;
+   border-width: 0px 0px 1px 0px;
+   border-color: grey;
+   border-style: solid;
+
  }
  .tab [type=radio] {
    display: none;
+
  }
  .tab-content {
    display: none;
@@ -142,14 +148,21 @@
    background: #1d1d1d;
    right: -1px;
    padding: 20px;
+   border-width: 0px 1px 1px 1px;
+   border-color: grey;
+   border-style: solid;
+
  }
  [type=radio]:checked ~ label {
- background: #1d1d1d;
- color: #cccccc;
- z-index: 2;
+   background: #1d1d1d;
+   color: #cccccc;
+   z-index: 2;
+   border-width: 1px 1px 0px 1px;
+   border-color: grey;
+   border-style: solid;
  }
  [type=radio]:checked ~ label ~ .tab-content {
- display: flex;
+   display: flex;
  }
  .container{
    border: 1px solid #D0D0D0;

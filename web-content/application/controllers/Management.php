@@ -11,17 +11,6 @@ class Management extends CI_Controller {
       redirect('Error/no_login');
     }
   }
-  public function add_new_measurement(){ 
-    $this->load->model('Management_model');
-    print_r($_POST);
-    $measdata['idStation']=htmlspecialchars($_POST['stationId']);
-    $measdata['timestamp']=htmlspecialchars($_POST['time']);
-    $measdata['temperature']=htmlspecialchars($_POST['temperature']);
-    $measdata['humidity']=htmlspecialchars($_POST['humidity']);
-    $measdata['pressure']=htmlspecialchars($_POST['pressure']);
-    $measdata['illuminance']=htmlspecialchars($_POST['illuminance']);
-    $this->Station_model->add_measurement_to_database($measdata);
-  }
 
   public function station_management(){
     $data['selected']="station_management";

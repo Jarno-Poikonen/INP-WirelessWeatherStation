@@ -5,6 +5,7 @@ class Stations extends CI_Controller {
   public function index(){
     $this->stations_summary();
   }
+  
   public function stations_summary(){
     $this->load->model('Station_model');
     $data['selected']          = "stations_summary";
