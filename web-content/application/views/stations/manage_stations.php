@@ -24,15 +24,16 @@
       <label for="tab-2">Modify station</label>
       <div class="tab-content">
         <form action="<?php echo site_url('Management/station_modify'); ?>" method="post">
+        </br>
           Id to modify <input type="text" name="id" required></br>
           </br>
           To preserve old value, leave field empty.
          <table>
              <tr><td>Designation</td><td><input type="text" name="designation"></td></tr>
              <tr><td>Region</td><td><input type="text" name="city"></td></tr>
+             <tr><td>Description</td><td><input type="text" name="description"></td></tr>
              <tr><td>Latitude</td><td><input type="text" name="latitude"></td></tr>
              <tr><td>Longitude</td><td><input type="text" name="longitude"></td></tr>
-             <tr><td>Description</td><td><input type="text" name="description"></td></tr>
              <tr><td></td><td><input type="submit" value="Modify"></td></tr>
          </table>
         </form>

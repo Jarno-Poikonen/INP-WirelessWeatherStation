@@ -1,13 +1,14 @@
 @font-face {
    font-family: "Verdana";
    src: local(Verdana),
-        url(../../fonts/Verdana.woff) format('woff');
+        url(../fonts/Verdana.woff) format('woff');
  }
  @font-face {
     font-family: "Consolas";
     src: local(Consolas),
-         url(../../fonts/Consolas.woff) format('woff');
+         url(../fonts/Consolas.woff) format('woff');
   }
+
  [type=submit] {
    background-color: inherit;
    color: inherit;
@@ -55,13 +56,11 @@
    color: inherit;
    display: inline-block;
  }
- #topnav input {
+ input {
    box-sizing: border-box;
-   width: 120px;
    border: none;
    padding: 3px 2px;
    background-color: #54575f;
-   margin: 8px 0px;
  }
  #loginbtn {
    font-size: 15px;
@@ -94,6 +93,14 @@
    opacity: 1;
    right: 0;
  }
+ #sidenavWrapper{
+   width: 200px;
+   min-height:90%;
+   height: 90%;
+   background-color: #44464c;
+   position:absolute;
+   left:0;
+ }
  #sidenav {
    width: 200px;
  }
@@ -124,7 +131,7 @@
    float:left;
  }
  .tab label {
-   background: #54575f;
+   background: #44464c;
    padding: 10px 15px;
    margin-left: -1px;
    position: relative;

@@ -145,7 +145,7 @@
       }
       myDashboard.draw(view);
     }
-    var hideIllu = document.getElementById("chkbox_hum");
+    var hideIllu = document.getElementById("chkbox_illu");
     hideIllu.onclick = function(){
       view = new google.visualization.DataView(data);
       if (this.checked){
@@ -162,23 +162,18 @@
 </script>
 <script>
   $(function () {
-    $('form').on('submit', function (e) {
-      e.preventDefault();  //prevent normal submit action, AJAX will handle this
-
+    $('.update_charts').click(function(){
       //Get the data from database
       $.ajax({
         type: 'POST',
         url: '<?php echo site_url('stations/ajaxtest'); ?>',
-        data: $('form').serialize(),
+        data: $(this).parent().serialize(),
         success: function (dbResponse) {
           drawDashboard(dbResponse);  //Draw the chart and give the data to it.
         }
       });
+      return false; // avoid to execute the actual form submission. AJAX will handle this
     });
-
-    //$("#chkbox_tmp").click(function(){
-    //  asd();
-    //});
   });
 
 </script>
@@ -188,15 +183,15 @@
   <p><b>Search station by ID and optionally specify a timeframe.<br>
      By default data is fetched from past 7 days.
   </b></p>
-  <form method="post">
-    Id <input id="station_id" type="text" name="id" required>
+  <form id="visform" method="post">
+    Id <input id="station_id" type="text" name="id" size="5" required>
     Start <input type="date" name="start"> End <input type="date" name="end"></br>
-    <input type="submit" value="Get">
+    <input type="submit" class="update_charts" value="Get">
   </form>
   <br>
 
   <input id="chkbox_tmp" type="checkbox" name="temperature" checked>Temperature
-  <input id="chkbox_hum" type="checkbox" name="Humidity" checked> Illuminance
+  <input id="chkbox_illu" type="checkbox" name="Humidity" checked> Illuminance
 
   <br>
   <div id="dashboard_div" style=""></div>

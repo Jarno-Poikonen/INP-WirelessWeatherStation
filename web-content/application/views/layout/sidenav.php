@@ -1,4 +1,4 @@
-<div style="width: 200px;min-height:90%; height: 90%; background-color: #54575f; position:absolute; left:0;">
+<div id="sidenavWrapper">
   <div id="sidenav">
     <a class="<?php if ($selected == "stations_summary") echo 'active'; ?>"   href="<?php echo site_url('Stations/stations_summary')?>"> Home </a>
     <a class="<?php if ($selected == "show_all_stations") echo 'active'; ?>"  href="<?php echo site_url('Stations/show_all_stations')?>"> All stations </a>

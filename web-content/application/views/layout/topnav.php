@@ -9,8 +9,8 @@
 
   if($_SESSION['loggedIn']==false){
     echo '<form action="'.site_url('login/siteLogin').'" method="post">
-          <input type="text" placeholder="User ID" name="loginID">
-          <input type="password" placeholder="Password" name="loginPw">
+          <input type="text" placeholder="User ID" name="loginID" size="12" style="margin: 8px 0px;">
+          <input type="password" placeholder="Password" name="loginPw" size="17" style="margin: 8px 0px;">
           <button id="loginbtn" type="submit" value="Login"><span>Login</span></button>
           </form>';
   }else{
