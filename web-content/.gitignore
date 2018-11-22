@@ -2,6 +2,7 @@
 .ftpconfig
 .gitignore
 application/config/database.php
+application/controllers/Measurement.php
 
 application/cache/*
 !application/cache/index.html
