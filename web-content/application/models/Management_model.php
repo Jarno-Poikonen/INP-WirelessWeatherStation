@@ -2,11 +2,6 @@
 
 class Management_model extends CI_Model{
 
-  public function add_measurement_to_database($measdata){
-    $this->db->set($measdata);
-    $this->db->insert('measurements');
-  }
-
   public function add_station_to_database($stationInfo){
     $this->db->set($stationInfo);
     $this->db->insert('stations');

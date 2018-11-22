@@ -4,17 +4,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Measurement extends CI_Controller {
 
   public function add_new_measurement(){
-    $this->load->model('Management_model');
-    print_r($_POST);
-    $measdata['idStation']=htmlspecialchars($_POST['idStation']);
-    $measdata['timestamp']=htmlspecialchars($_POST['timestamp']);
-    $measdata['temperature']=htmlspecialchars($_POST['temperature']);
-    $measdata['humidity']=htmlspecialchars($_POST['humidity']);
-    $measdata['pressure']=htmlspecialchars($_POST['pressure']);
-    $measdata['illuminance']=htmlspecialchars($_POST['illuminance']);
-    $this->Management_model->add_measurement_to_database($measdata);
+    $this->load->model('Measurement_model');
+    //print_r($_POST);
+    $sender_hmac = hash_hmac('sha256', '52-5951024400', '2placeholder');
+    $TESTPOST = array(
+      "signature" => $sender_hmac,
+      "idStation" => '5',
+      "messageIndex" => '2',
+      "temperature" => '-5',
+      "humidity" => '95',
+      "pressure" => '1024',
+      "illuminance" => '400'
+    );
+    if($this->Measurement_model->add_measurement_to_database($_POST)){
+      echo "MESSAGE ACCEPTED";
+    }else{
+      echo "SIGNATURE MISMATCH, MESSAGE REJECTED";
+    }
   }
-  public function verify_signature($received, $signature, $shared_secret) {
-    return hash_equals(hash_hmac($received, $shared_secret), $signature);
-  }
+}
 ?>

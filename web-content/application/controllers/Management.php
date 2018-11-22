@@ -30,6 +30,7 @@ class Management extends CI_Controller {
     $this->form_validation->set_rules('latitude', 'Latitude', 'numeric');
     $this->form_validation->set_rules('longitude', 'Longitude', 'numeric');
     $this->form_validation->set_rules('longitude', 'Longitude', 'numeric');
+    $this->form_validation->set_rules('interval', 'Measurement interval', 'integer');
     if ($this->form_validation->run() == TRUE){
       $this->load->model('Management_model');
       $id = $this->input->post("id");
