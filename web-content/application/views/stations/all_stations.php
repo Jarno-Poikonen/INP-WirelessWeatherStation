@@ -17,16 +17,15 @@
       showInfoWindow: true,
       zoomLevel:11
     };
-
     var map = new google.visualization.Map(document.getElementById('map_div'));
-
     map.draw(data, options);
   };
 </script>
 
 <div id="main" style="width:80%;">
-  <p> Stations  </p>
   <table class="dataframe" style="vertical-align: top; display:inline-block">
+    <br>
+    <caption>Stations</caption>
     <thread>
       <tr>
         <th>ID</th><th>Designation</th><th>Region</th><th>Description</th><th>Coordinates</th><th>Show on map</th>
@@ -38,7 +37,7 @@
            echo '<tr>';
            echo '<td>'.$s['idStation'].'</td>';
            echo '<td>'.$s['designation'].'</td>';
-           echo '<td>'.$s['city'].'</td>';
+           echo '<td>'.$s['region'].'</td>';
            echo '<td>'.$s['description'].'</td>';
            echo '<td>'.$s['latitude'].','.$s['longitude'].'</td>';
            echo '<th> <button class="'.$s['latitude'].','.$s['longitude'].'" onclick="drawMap(this.className, this.id)">Show</button>';

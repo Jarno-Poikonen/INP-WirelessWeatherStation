@@ -8,7 +8,6 @@
     src: local(Consolas),
          url(../fonts/Consolas.woff) format('woff');
   }
-
  [type=submit] {
    background-color: inherit;
    color: inherit;
@@ -30,14 +29,11 @@
    margin: 0;
    font-family: "Verdana";
  }
- .dataframe tr:nth-child(odd) {
-   background-color: #2f3537;
- }
- .dataframe tr, td {
-   padding: 5px;
- }
- .dataframe th {
-   padding: 5px 10px;
+ input {
+   box-sizing: border-box;
+   border: none;
+   padding: 3px 2px;
+   background-color: #54575f;
  }
 
  #topnav{
@@ -55,12 +51,6 @@
    font-size: 20px;
    color: inherit;
    display: inline-block;
- }
- input {
-   box-sizing: border-box;
-   border: none;
-   padding: 3px 2px;
-   background-color: #54575f;
  }
  #loginbtn {
    font-size: 15px;
@@ -121,6 +111,20 @@
    left:200px;
    padding: 0px 16px 0px 16px;
  }
+
+ .dataframe tr:nth-child(odd) {
+   background-color: #2f3537;
+ }
+ .dataframe tr, td {
+   padding: 5px;
+ }
+ .dataframe th {
+   padding: 5px 10px;
+ }
+ .dataframe caption {
+   text-align: left;
+ }
+
  .tab-container{
    position: relative;
    min-height: 200px;
@@ -145,7 +149,6 @@
  }
  .tab [type=radio] {
    display: none;
-
  }
  .tab-content {
    display: none;

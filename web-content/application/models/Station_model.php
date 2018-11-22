@@ -19,7 +19,7 @@ class Station_model extends CI_Model{
   }
 
   public function get_recent_measurements(){
-    $this->db->select('designation, city, timestamp, temperature, humidity, pressure, illuminance');
+    $this->db->select('designation, region, timestamp, temperature, humidity, pressure, illuminance, cmonoxide');
     $this->db->join('stations', 'measurements.idStation = stations.idStation');
     $this->db->from('measurements');
     $this->db->order_by("idMeasurement", "desc");

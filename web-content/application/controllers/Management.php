@@ -26,18 +26,26 @@ class Management extends CI_Controller {
   }
 
   public function station_modify(){
-    $this->load->model('Management_model');
-    $id = $this->input->post("id");
-    foreach (array_slice($this->input->post(), 1) as $key => $value) {
-      if (!empty($value)){
-        $newData[$key] = $value;
+    $this->form_validation->set_rules('id', 'Station ID', 'required|integer');
+    $this->form_validation->set_rules('latitude', 'Latitude', 'numeric');
+    $this->form_validation->set_rules('longitude', 'Longitude', 'numeric');
+    $this->form_validation->set_rules('longitude', 'Longitude', 'numeric');
+    if ($this->form_validation->run() == TRUE){
+      $this->load->model('Management_model');
+      $id = $this->input->post("id");
+      foreach (array_slice($this->input->post(), 1) as $key => $value) {
+        if (!empty($value)){
+          $newData[$key] = $value;
+        }
+      }
+      if (!empty($newData)){
+        $this->Management_model->modify_station_in_database($id, $newData);
+        redirect("Stations/show_all_stations");
       }
     }
-    if (!empty($newData)){
-      $this->Management_model->modify_station_in_database($id, $newData);
-      redirect("Stations/show_all_stations");
-    }
-    echo "<p>You did not change anything...</p>";
+    $data['selected']="station_management";
+    $data['view']='stations/manage_stations';
+    $this->load->view('layout/content', $data);
   }
 
   public function station_remove(){
@@ -48,7 +56,7 @@ class Management extends CI_Controller {
       $this->Management_model->remove_station_from_database($id);
       redirect("Stations/show_all_stations");
     } else {
-      echo "<p> nope</p>";
+      echo "<p>NO CHANCE</br>TRY USING A CORRECT PASSWORD NEXT TIME</br></br>I'M YOUR FRIENDLY HELP MESSAGE. HAVE A NICE DAY</p>";
     }
   }
 }
