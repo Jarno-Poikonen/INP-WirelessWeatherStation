@@ -17,9 +17,9 @@ class Measurement extends CI_Controller {
       "illuminance" => '400'
     );
     if($this->Measurement_model->add_measurement_to_database($_POST)){
-      echo "MESSAGE ACCEPTED";
+      echo "ACK";
     }else{
-      echo "SIGNATURE MISMATCH, MESSAGE REJECTED";
+      echo "NACK";
     }
   }
 }

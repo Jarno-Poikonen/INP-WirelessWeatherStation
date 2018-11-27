@@ -224,13 +224,17 @@
 </script>
 
 <div id="main" style="width:85%">
-  <p><b>Search station by ID and optionally specify a timeframe.<br>
+  <p><b>Search station by ID and optionally specify a timeframe.
      By default data is fetched from past 7 days.
   </b></p>
   <form id="visform" method="post">
-    Id <input id="station_id" type="text" name="id" size="5" required>
-    Start <input type="date" name="start"> End <input type="date" name="end"></br>
-    <input type="submit" class="update_charts" value="Get">
+    <table>
+      <tr>
+        <td>Id</td><td><input id="station_id" type="text" name="id" size="5" required></td>
+        <td>Start</td><td><input type="date" name="start"></td><td>End</td><td><input type="date" name="end"></td>
+      </tr>
+      </table>
+      <input type="submit" class="update_charts" value="Draw">
   </form>
   <br>
 

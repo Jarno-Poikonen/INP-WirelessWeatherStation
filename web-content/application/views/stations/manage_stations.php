@@ -1,6 +1,7 @@
 <div id="main">
   <h3> Station management </h3>
-  <?php echo validation_errors(); ?>
+  <?php echo "<span style=color:yellow>".validation_errors().$this->session->flashdata('error')."</span>"?>
+
   <div class="tab-container">
     <div class="tab">
       <input type="radio" id="tab-1" name="tab-group1" checked>
@@ -11,10 +12,10 @@
          <table>
              <tr><td>Designation</td><td><input type="text" name="designation" required></td></tr>
              <tr><td>Region</td><td><input type="text" name="region" required></td></tr>
-             <tr><td>Measurement<br>interval</td><td><input type="text" name="interval" required></td></tr>
-             <tr><td>Description</td><td><input type="text" name="description"></td></tr>
-             <tr><td>Latitude</td><td><input type="text" name="latitude"></td></tr>
-             <tr><td>Longitude</td><td><input type="text" name="longitude"></td></tr>
+             <tr><td>Interval</td><td><input type="text" name="interval" size=10 required></td></tr>
+             <tr><td>Latitude</td><td><input type="text" name="latitude" size=10></td></tr>
+             <tr><td>Longitude</td><td><input type="text" name="longitude" size=10></td></tr>
+             <tr><td>Description</td><td><input type="text" name="description" size=37></td></tr>
              <tr><td></td><td><input type="submit" value="Add"></td></tr>
          </table>
         </form>
@@ -28,16 +29,16 @@
         <!-- MODIFY -->
         <form action="<?php echo site_url('Management/station_modify'); ?>" method="post">
         </br>
-          Id to modify <input type="text" name="id" required></br>
+          Id to modify <input type="text" name="id" size=5 required></br>
           </br>
           To preserve old value, leave field empty.
          <table>
              <tr><td>Designation</td><td><input type="text" name="designation"></td></tr>
              <tr><td>Region</td><td><input type="text" name="region"></td></tr>
-             <tr><td>Measurement<br>interval</td><td><input type="text" name="interval"></td></tr>
-             <tr><td>Description</td><td><input type="text" name="description"></td></tr>
-             <tr><td>Latitude</td><td><input type="text" name="latitude" value="<?php echo set_value('latitude'); ?>"></td></tr>
-             <tr><td>Longitude</td><td><input type="text" name="longitude" value="<?php echo set_value('longitude'); ?>"></td></tr>
+             <tr><td>Interval</td><td><input type="text" name="interval" size=10></td></tr>
+             <tr><td>Latitude</td><td><input type="text" name="latitude" size=10></td></tr>
+             <tr><td>Longitude</td><td><input type="text" name="longitude" size=10></td></tr>
+             <tr><td>Description</td><td><input type="text" name="description" size=37></td></tr>
              <tr><td></td><td><input type="submit" value="Modify"></td></tr>
          </table>
         </form>
@@ -51,7 +52,7 @@
         <!-- REMOVE -->
         <form action="<?php echo site_url('Management/station_remove'); ?>" method="post">
           <table>
-              <tr><td>Id to remove </td><td><input type="text" name="idToRemove" required></td><td><input type="submit" value="Remove"></td></tr>
+              <tr><td>Id to remove </td><td><input type="text" name="idToRemove" size=8 required></td><td><input type="submit" value="Remove"></td></tr>
           </table>
           <p class="warn">Note that removing a station also ERASES MEASUREMENT DATA related to it.<br>
           Verify with your password below</p>

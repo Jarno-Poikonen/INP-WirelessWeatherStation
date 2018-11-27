@@ -27,15 +27,13 @@ class Stations extends CI_Controller {
     $this->load->model('Station_model');
     $data['selected'] = "station_search";
     $data['view']     = "stations/station_search";
-    $this->form_validation->set_rules('data[latitude]', 'Latitude', 'numeric');
-    $this->form_validation->set_rules('data[longitude]', 'Longitude', 'numeric');
-    if ($this->form_validation->run() == TRUE){
-        //print_r($this->input->post()['data']);
+    if (isset($this->input->post()['data'])){
+        print_r($this->input->post()['data']);
         $queryParams=$this->input->post()['data'];
         $data['results'] = $this->Station_model->search_stations_from_database($queryParams);
         //print_r($data['results']);
-    }else{
-      $data['results'] = [];
+    } else {
+       $data['results'] = [];
     }
     $this->load->view('layout/content', $data);
 	}

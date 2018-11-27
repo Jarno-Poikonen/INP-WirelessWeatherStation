@@ -31,7 +31,7 @@ class Station_model extends CI_Model{
     $this->db->from('stations');
     foreach ($queryParams as $k => $v){
       if (!empty($v)){
-        $this->db->where($k, $v);
+        $this->db->like($k, $v);
       }
     }
     //$this->db->get()->result_array(); //debug

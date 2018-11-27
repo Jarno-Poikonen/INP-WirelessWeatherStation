@@ -5,9 +5,7 @@
    <table>
        <tr><td>Designation</td><td><input type="text" name="data[designation]"></td>
           <td>Region</td><td><input type="text" name="data[region]"></td>
-          <td>Latitude</td><td><input type="text" name="data[latitude]" value="<?php echo set_value('data[latitude]'); ?>"></td>
-          <td>Longitude</td><td><input type="text" name="data[longitude]" value="<?php echo set_value('data[longitude]'); ?>"></td>
-          <td>Description</td><td><input type="text" name="data[description]"></td></tr>
+          <td>Description</td><td><input type="text" name="data[description]"></td></tr> 
        <tr><td></td><td><input type="submit" value="Search"></td></tr>
    </table>
   </form>

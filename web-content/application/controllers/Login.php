@@ -9,6 +9,7 @@ class Login extends CI_Controller{
       $_SESSION['loggedIn']=true;
       redirect('Management/station_management');
     }
+    $this->session->set_flashdata('error', 'Login failed');
     redirect($_SERVER['HTTP_REFERER']);
   }
 
