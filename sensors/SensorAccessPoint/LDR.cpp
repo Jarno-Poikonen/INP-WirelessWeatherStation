@@ -1,6 +1,5 @@
-#include <cstdint>
-
-// ldr must have 215.2ohm resistor in series with a voltage supply of 4V
+#include "LDR.h"
+// LDR must have 215.2ohm resistor in series with a voltage supply of 4V
 float LDR_4V_215_2R(uint16_t millivolts){
   const float coefficents[] = {
   	0,
@@ -21,8 +20,8 @@ float LDR_4V_215_2R(uint16_t millivolts){
 		1.0 / 0.012533
 	};
 
-	const uint16_t voltBase[] = {0, 1, 4, 29, 67, 100, 161, 235, 321, 548, 773, 1061, 1500, 1837, 2115, 2491};
-	const uint16_t luxBase[]  = {0, 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000};
+	const uint16_t voltBase[] = {0, 1, 4, 29, 67, 100, 161, 235, 321, 548,  773, 1061, 1500,  1837, 2115, 2491};
+	const uint16_t luxBase[]  = {0, 1, 2,  5, 10,  20,  50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000};
 
 			 if(millivolts == voltBase[0])  return coefficents[0]  * (millivolts-voltBase[0])  + luxBase[0];
 	else if(millivolts <= voltBase[1])  return coefficents[1]  * (millivolts-voltBase[0])  + luxBase[0];
