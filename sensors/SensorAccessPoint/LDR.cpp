@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <stddef.h>
 #include <stdint.h>
+#include <avr/pgmspace.h>
 // LDR must have 215.2ohm resistor in series with a voltage supply of 4V
 float LDR_4V_215_2R(uint16_t millivolts){
 	
