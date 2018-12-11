@@ -38,7 +38,7 @@ float SAP::getPressure(){
 }
 
 float SAP::getTemperature(){
-	return bme280.readTempC() * 0.9629 - 4.1434; // Calibration correction
+	return bme280.readTempC(); // Broken Calibration: * 0.9629 - 4.1434
 }
 
 float SAP::getHumidity(){
