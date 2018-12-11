@@ -636,6 +636,9 @@ bool at_tcp_receive(void** buffer, size_t* data_size)
 	return true;
 }
 
+const uint8_t inp_post_server_students[20] PROGMEM = { 0x77, 0x77, 0x77, 0x2e, 0x73, 0x74, 0x75, 0x64, 0x65, 0x6e, 0x74, 0x73, 0x2e, 0x6f, 0x61, 0x6d, 0x6b, 0x2e, 0x66, 0x69 };
+const uint8_t inp_post_ask_interval[73] PROGMEM = { 0x2f, 0x7e, 0x74, 0x35, 0x69, 0x6d, 0x74, 0x75, 0x30, 0x30, 0x2f, 0x77, 0x65, 0x61, 0x74, 0x68, 0x65, 0x72, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x2e, 0x70, 0x68, 0x70, 0x2f, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x67, 0x65, 0x74, 0x5f, 0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x5f, 0x69, 0x6e, 0x74, 0x65, 0x72, 0x76, 0x61, 0x6c };
+const uint8_t inp_post_add_measurement[68] PROGMEM = { 0x2f, 0x7e, 0x74, 0x35, 0x69, 0x6d, 0x74, 0x75, 0x30, 0x30, 0x2f, 0x77, 0x65, 0x61, 0x74, 0x68, 0x65, 0x72, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x73, 0x2f, 0x69, 0x6e, 0x64, 0x65, 0x78, 0x2e, 0x70, 0x68, 0x70, 0x2f, 0x4d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x61, 0x64, 0x64, 0x5f, 0x6e, 0x65, 0x77, 0x5f, 0x6d, 0x65, 0x61, 0x73, 0x75, 0x72, 0x65, 0x6d, 0x65, 0x6e, 0x74 };
 const uint8_t at_http_post_str[5] PROGMEM = { 0x50, 0x4f, 0x53, 0x54, 0x20 };
 const uint8_t at_http_host_str[17] PROGMEM = { 0x20, 0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x31, 0x0d, 0x0a, 0x48, 0x6f, 0x73, 0x74, 0x3a, 0x20 };
 const uint8_t at_http_en_str[86] PROGMEM = { 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x3a, 0x20, 0x63, 0x6c, 0x6f, 0x73, 0x65, 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x2d, 0x54, 0x79, 0x70, 0x65, 0x3a, 0x20, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x78, 0x2d, 0x77, 0x77, 0x77, 0x2d, 0x66, 0x6f, 0x72, 0x6d, 0x2d, 0x75, 0x72, 0x6c, 0x65, 0x6e, 0x63, 0x6f, 0x64, 0x65, 0x64, 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x2d, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x3a, 0x20 };
@@ -643,8 +646,24 @@ const uint8_t at_http_en_str[86] PROGMEM = { 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x6e,
 bool at_http_post(const char* host, uint16_t port, const char* path, const char* key_value_pairs, int* response_status, size_t* response_size, char** response)
 {
 	const size_t post_constant_data_size = 112;
-	size_t post_host_length = strlen(host);
-	size_t post_path_length = strlen(path);
+  size_t post_host_length;
+  if ((uintptr_t)host == INP_POST_SERVER_STUDENTS)
+    post_host_length = 20;
+  else if ((uintptr_t)host == INP_POST_ASK_INTERVAL)
+    post_host_length = 73;
+  else if ((uintptr_t)host == INP_POST_PATH_ADD_MEASUREMENT)
+    post_host_length = 68;
+  else
+	  post_host_length = strlen(host);
+  size_t post_path_length;
+  if ((uintptr_t)path == INP_POST_SERVER_STUDENTS)
+    post_path_length = 20;
+  else if ((uintptr_t)path == INP_POST_ASK_INTERVAL)
+    post_path_length = 73;
+  else if ((uintptr_t)path == INP_POST_PATH_ADD_MEASUREMENT)
+    post_path_length = 68;
+  else
+    post_path_length = strlen(path);
 	size_t post_key_value_pair_length = strlen(key_value_pairs);
 	char post_key_value_pair_length_string[6] = { 0, 0, 0, 0, 0, 0 };
 	size_t post_key_value_pair_length_string_length = 0;
@@ -700,33 +719,76 @@ bool at_http_post(const char* host, uint16_t port, const char* path, const char*
 	char* ip_address;
 	if (!at_cifsr(&ip_address_length, &ip_address))
 		return false;
-	if (!at_tcp_connect(host, port))
+  if ((uintptr_t)host == INP_POST_SERVER_STUDENTS || (uintptr_t)host == INP_POST_ASK_INTERVAL || (uintptr_t)host == INP_POST_PATH_ADD_MEASUREMENT)
+  {
+    char* tmp_host_buffer = at_buffer + 384;
+    if ((uintptr_t)host == INP_POST_SERVER_STUDENTS)
+    {
+      memcpy_P(tmp_host_buffer, inp_post_server_students, 20);
+      tmp_host_buffer[20] = 0;
+    }
+    else if ((uintptr_t)host == INP_POST_ASK_INTERVAL)
+    {
+      memcpy_P(tmp_host_buffer, inp_post_ask_interval, 73);
+      tmp_host_buffer[73] = 0;
+    }
+    else
+    {
+      memcpy_P(tmp_host_buffer, inp_post_add_measurement, 68);
+      tmp_host_buffer[68] = 0;
+    }
+    if (!at_tcp_connect(tmp_host_buffer, port))
+      return false;
+  }
+	else if (!at_tcp_connect(host, port))
 		return false;
 
   if ((uintptr_t)key_value_pairs == (uintptr_t)(at_buffer + 256))
   {
     memmove(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length + 4, key_value_pairs, post_key_value_pair_length);
     memcpy_P(at_buffer, at_http_post_str, 5);
-    //memcpy(at_buffer, "POST ", 5);
-    memcpy(at_buffer + 5, path, post_path_length);
+    if ((uintptr_t)path == INP_POST_SERVER_STUDENTS)
+      memcpy_P(at_buffer + 5, inp_post_server_students, 20);
+    else if ((uintptr_t)path == INP_POST_ASK_INTERVAL)
+      memcpy_P(at_buffer + 5, inp_post_ask_interval, 73);
+    else if ((uintptr_t)path == INP_POST_PATH_ADD_MEASUREMENT)
+      memcpy_P(at_buffer + 5, inp_post_add_measurement, 68);
+    else
+      memcpy(at_buffer + 5, path, post_path_length);
     memcpy_P(at_buffer + 5 + post_path_length, at_http_host_str, 17);
-    //memcpy(at_buffer + 5 + post_path_length, " HTTP/1.1\r\nHost: ", 17);
-    memcpy(at_buffer + 5 + post_path_length + 17, host, post_host_length);
+    if ((uintptr_t)host == INP_POST_SERVER_STUDENTS)
+      memcpy_P(at_buffer + 5 + post_path_length + 17, inp_post_server_students, 20);
+    else if ((uintptr_t)host == INP_POST_ASK_INTERVAL)
+      memcpy_P(at_buffer + 5 + post_path_length + 17, inp_post_ask_interval, 73);
+    else if ((uintptr_t)host == INP_POST_PATH_ADD_MEASUREMENT)
+      memcpy_P(at_buffer + 5 + post_path_length + 17, inp_post_add_measurement, 68);
+    else
+      memcpy(at_buffer + 5 + post_path_length + 17, host, post_host_length);
     memcpy_P(at_buffer + 5 + post_path_length + 17 + post_host_length, at_http_en_str, 86);
-    //memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length, "\r\nConnection: close\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ", 86);
     memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86, post_key_value_pair_length_string, post_key_value_pair_length_string_length);
     memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length, "\r\n\r\n", 4);
   }
   else
   {
     memcpy_P(at_buffer, at_http_post_str, 5);
-    //memcpy(at_buffer, "POST ", 5);
-    memcpy(at_buffer + 5, path, post_path_length);
+    if ((uintptr_t)path == INP_POST_SERVER_STUDENTS)
+      memcpy_P(at_buffer + 5, inp_post_server_students, 20);
+    else if ((uintptr_t)path == INP_POST_ASK_INTERVAL)
+      memcpy_P(at_buffer + 5, inp_post_ask_interval, 73);
+    else if ((uintptr_t)path == INP_POST_PATH_ADD_MEASUREMENT)
+      memcpy_P(at_buffer + 5, inp_post_add_measurement, 68);
+    else
+      memcpy(at_buffer + 5, path, post_path_length);
     memcpy_P(at_buffer + 5 + post_path_length, at_http_host_str, 17);
-    //memcpy(at_buffer + 5 + post_path_length, " HTTP/1.1\r\nHost: ", 17);
-    memcpy(at_buffer + 5 + post_path_length + 17, host, post_host_length);
+    if ((uintptr_t)host == INP_POST_SERVER_STUDENTS)
+      memcpy_P(at_buffer + 5 + post_path_length + 17, inp_post_server_students, 20);
+    else if ((uintptr_t)host == INP_POST_ASK_INTERVAL)
+      memcpy_P(at_buffer + 5 + post_path_length + 17, inp_post_ask_interval, 73);
+    else if ((uintptr_t)host == INP_POST_PATH_ADD_MEASUREMENT)
+      memcpy_P(at_buffer + 5 + post_path_length + 17, inp_post_add_measurement, 68);
+    else
+      memcpy(at_buffer + 5 + post_path_length + 17, host, post_host_length);
     memcpy_P(at_buffer + 5 + post_path_length + 17 + post_host_length, at_http_en_str, 86);
-    //memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length, "\r\nConnection: close\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ", 86);
     memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86, post_key_value_pair_length_string, post_key_value_pair_length_string_length);
     memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length, "\r\n\r\n", 4);
     memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length + 4, key_value_pairs, post_key_value_pair_length);

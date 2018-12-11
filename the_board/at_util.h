@@ -2,6 +2,9 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#define INP_POST_SERVER_STUDENTS ((uintptr_t)0)
+#define INP_POST_ASK_INTERVAL ((uintptr_t)1)
+#define INP_POST_PATH_ADD_MEASUREMENT ((uintptr_t)2)
 
 bool at_wait_at_module_wakeup(unsigned long wait_for);
 
