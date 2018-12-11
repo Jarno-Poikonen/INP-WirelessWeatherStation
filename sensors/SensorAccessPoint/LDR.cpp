@@ -4,8 +4,8 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 // LDR must have 215.2ohm resistor in series with a voltage supply of 4V
-const uint16_t voltBase[16] PROGMEM = {0, 0, 1, 4, 29, 67, 100, 161, 235, 321, 548,  773, 1061, 1500,  1837, 2115 };
-const uint16_t luxBase[16] PROGMEM = {0, 0, 1, 2,  5, 10,  20,  50, 100, 200, 500, 1000, 2000, 5000, 10000 };
+const uint16_t voltBase[16] PROGMEM = {0, 1, 4, 29, 67, 100, 161, 235, 321, 548,  773, 1061, 1500,  1837, 2115, 2491};
+const uint16_t luxBase[16] PROGMEM = {0, 1, 2,  5, 10,  20,  50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000};
 const float coefficents[16] PROGMEM = {
     0.0f,
     1.0f,
@@ -23,21 +23,34 @@ const float coefficents[16] PROGMEM = {
     1.0f / 0.0674f,
     1.0f / 0.0278f,
     1.0f / 0.012533f };
+
     
 float LDR_4V_215_2R(uint16_t millivolts){
-	
-	
-	for (uint8_t index = 0;; ++index)
+	if (millivolts == pgm_read_word_near((uint16_t)voltBase))
+		return 0;
+
+	for (uint8_t index = 1;; ++index)
 	{
-		uint16_t vb = pgm_read_word_near((uint16_t)voltBase + (uint16_t)index * sizeof(uint16_t));
-		if (millivolts <= vb)
-			return pgm_read_float_near((uint16_t)coefficents + (uint16_t)index * sizeof(float)) * (float)(millivolts - vb) + (float)pgm_read_word_near((uint16_t)luxBase + (uint16_t)index * sizeof(uint16_t));
+		float coeff = pgm_read_float_near((uint16_t)coefficents + (uint16_t)index * sizeof(float));
+		uint16_t vb_curr = pgm_read_word_near((uint16_t)voltBase + (uint16_t)index * sizeof(uint16_t));
+		uint16_t vb_prev = pgm_read_word_near((uint16_t)voltBase + (uint16_t)(index-1) * sizeof(uint16_t));
+		float diff = millivolts - vb_prev;
+		uint16_t lux = pgm_read_word_near((uint16_t)luxBase + (uint16_t)(index-1) * sizeof(uint16_t));
+
+		if (millivolts <= vb_curr)
+			return  coeff * diff + lux;
 	}
 	
 	return 100000.0f;
+
+}
+
 	
-	/*
-	
+
+/*
+#include "LDR.h"
+// LDR must have 215.2ohm resistor in series with a voltage supply of 4V
+float LDR_4V_215_2R(uint16_t millivolts){
   const float coefficents[] = {
   	0,
   	1,
@@ -57,8 +70,8 @@ float LDR_4V_215_2R(uint16_t millivolts){
 		1.0 / 0.012533
 	};
 
-	const uint16_t voltBase[] = {0, 0, 1, 4, 29, 67, 100, 161, 235, 321, 548,  773, 1061, 1500,  1837, 2115, 2491};
-	const uint16_t luxBase[]  = {0, 0, 1, 2,  5, 10,  20,  50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000};
+	const uint16_t voltBase[] = {0, 1, 4, 29, 67, 100, 161, 235, 321, 548,  773, 1061, 1500,  1837, 2115, 2491};
+	const uint16_t luxBase[]  = {0, 1, 2,  5, 10,  20,  50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000};
 
 			 if(millivolts == voltBase[0])  return coefficents[0]  * (millivolts-voltBase[0])  + luxBase[0];
 	else if(millivolts <= voltBase[1])  return coefficents[1]  * (millivolts-voltBase[0])  + luxBase[0];
@@ -77,5 +90,4 @@ float LDR_4V_215_2R(uint16_t millivolts){
 	else if(millivolts <= voltBase[14]) return coefficents[14] * (millivolts-voltBase[13]) + luxBase[13];
 	else if(millivolts <= voltBase[15]) return coefficents[15] * (millivolts-voltBase[14]) + luxBase[14];
 	else return 100000;
-	*/
-}
+}*/
