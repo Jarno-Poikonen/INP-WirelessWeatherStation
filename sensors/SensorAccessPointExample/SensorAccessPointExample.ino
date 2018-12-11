@@ -58,7 +58,7 @@ void loop(){
   // debug raw carbon monoxide sensor vout value
   vout = sap.getFCMvout(); 												 // !!! PROBLEMATIC !!!
 
-  rs = sap.getFCMrs(vout, 5.000f, 1024, 10078.6f); // !!! PROBLEMATIC !!!
+  rs = sap.getFCMrs(vout, 5.000f, 1024, 39000.0f); // !!! PROBLEMATIC !!!
 
   // print sensor readings in meaningful units
   Serial.print(LDR_mV, 2);			// !!! NOT TO BE USED IN THE FINAL INTEGRATION !!!
