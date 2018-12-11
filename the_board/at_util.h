@@ -32,3 +32,7 @@ bool at_cifsr(size_t* ip_address_length, char** ip_address);
 bool at_http_post(const char* host, uint16_t port, const char* path, const char* key_value_pairs, int* response_status, size_t* response_size, char** response);
 
 bool at_udp_send(const char* host, uint16_t port, size_t size, void* data);
+
+bool inp_http_ask_measurement_interval(const char* host, const char* path, uint32_t station, uint32_t* interval);
+
+bool inp_http_post_measurements(const char* host, const char* path, unsigned long station, float temperature, float humididy, float pressure, float illuminance);

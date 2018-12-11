@@ -2,8 +2,8 @@
 #include <string.h>
 #include "inp_power.h"
 #include "at_util.h"
-#include "inp_post.h"
 #include "SAP.h"
+#include <avr/pgmspace.h>
 #define MS_TIME_MIMUTE 60000
 #define MS_TIME_3_HOURS 10800000
 
@@ -20,7 +20,7 @@ void setup()
 {
   inp_configure_power();
   pinMode(LDR_VOLTAGE_OUTPUT_PIN, INPUT);
-  //sap.begin(0, 102350);
+  sap.begin(0, 102350);
   Serial.begin(9600);
   sleep_time = MS_TIME_3_HOURS;
   for (int i = 4; i--;)
@@ -34,21 +34,24 @@ void setup()
 
 void loop()
 {
+  //SoftwareSerial my_serial(7, 12); // RX, TX
+  //my_serial.begin(9600);
+  
   // calculate and return temperature as Celsius
   //float temperature = sap.getTemperature();
-  float temperature = 1.0f;
+  float temperature = 9.0f;
 
   // calculate and return humiduty as percentage
   //float humidity = sap.getHumidity();
-  float humidity = 2.0f;
+  float humidity = 9.0f;
 
   // calculate and return pressure as hectoPascals
   //float pressure = sap.getPressure();
-  float pressure = 3.0f;
+  float pressure = 9.0f;
 
   // calculate and return the illuminance as lux
   //float illuminance = sap.getIlluminance((float)analogRead(LDR_VOLTAGE_OUTPUT_PIN) / LDR_ADC_RESOLUTION * PWM_4_006V_AS_MILLIVOLTS);
-  float illuminance = 4.0f;
+  float illuminance = 9.0f;
 
   //digitalWrite(LED_BUILTIN, HIGH);
   
@@ -59,6 +62,10 @@ void loop()
     else
       --try_count;
   }
+
+
+  //sap.begin(0, 102350);
+  digitalWrite(LED_BUILTIN, HIGH);
   
   //digitalWrite(LED_BUILTIN, LOW);
 
@@ -73,6 +80,10 @@ void loop()
      else
        --try_count;
   }
+
+  //sap.begin(0, 102350);
+
+  digitalWrite(LED_BUILTIN, LOW);
 
   inp_sleep(sleep_time);
 }
