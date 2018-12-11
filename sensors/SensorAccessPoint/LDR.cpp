@@ -4,28 +4,29 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 // LDR must have 215.2ohm resistor in series with a voltage supply of 4V
+const uint16_t voltBase[16] PROGMEM = {0, 0, 1, 4, 29, 67, 100, 161, 235, 321, 548,  773, 1061, 1500,  1837, 2115 };
+const uint16_t luxBase[16] PROGMEM = {0, 0, 1, 2,  5, 10,  20,  50, 100, 200, 500, 1000, 2000, 5000, 10000 };
+const float coefficents[16] PROGMEM = {
+    0.0f,
+    1.0f,
+    0.333333f,
+    0.120000f,
+    1.0f / 7.6f,
+    1.0f / 3.3f,
+    1.0f / 2.033333f,
+    1.0f / 1.48f,
+    1.0f / 0.86f,
+    1.0f / 0.756666f,
+    1.0f / 0.45f,
+    1.0f / 0.288f,
+    1.0f / 0.146333f,
+    1.0f / 0.0674f,
+    1.0f / 0.0278f,
+    1.0f / 0.012533f };
+    
 float LDR_4V_215_2R(uint16_t millivolts){
 	
-	const uint16_t voltBase[16] PROGMEM = {0, 0, 1, 4, 29, 67, 100, 161, 235, 321, 548,  773, 1061, 1500,  1837, 2115 };
-	const uint16_t luxBase[16] PROGMEM = {0, 0, 1, 2,  5, 10,  20,  50, 100, 200, 500, 1000, 2000, 5000, 10000 };
-	const float coefficents[16] PROGMEM = {
-		0.0f,
-		1.0f,
-		0.333333f,
-		0.120000f,
-		1.0f / 7.6f,
-		1.0f / 3.3f,
-		1.0f / 2.033333f,
-		1.0f / 1.48f,
-		1.0f / 0.86f,
-		1.0f / 0.756666f,
-		1.0f / 0.45f,
-		1.0f / 0.288f,
-		1.0f / 0.146333f,
-		1.0f / 0.0674f,
-		1.0f / 0.0278f,
-		1.0f / 0.012533f };
-		
+	
 	for (uint8_t index = 0;; ++index)
 	{
 		uint16_t vb = pgm_read_word_near((uint16_t)voltBase + (uint16_t)index * sizeof(uint16_t));

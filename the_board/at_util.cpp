@@ -2,10 +2,11 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <string.h>
+#include <avr/pgmspace.h>
 #include "at_util.h"
 #include "inp_power.h"
 
-#define AT_UTIL_DEBUG_OUT
+//#define AT_UTIL_DEBUG_OUT
 #ifdef AT_UTIL_DEBUG_OUT
 #include <SoftwareSerial.h>
 SoftwareSerial my_serial(7, 12); // RX, TX
@@ -13,7 +14,7 @@ SoftwareSerial my_serial(7, 12); // RX, TX
 
 const char* at_pin_code = "0000";
 
-static char at_buffer[300];
+static char at_buffer[512];
 
 inline unsigned long at_time()
 {
@@ -635,6 +636,10 @@ bool at_tcp_receive(void** buffer, size_t* data_size)
 	return true;
 }
 
+const uint8_t at_http_post_str[5] PROGMEM = { 0x50, 0x4f, 0x53, 0x54, 0x20 };
+const uint8_t at_http_host_str[17] PROGMEM = { 0x20, 0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x31, 0x0d, 0x0a, 0x48, 0x6f, 0x73, 0x74, 0x3a, 0x20 };
+const uint8_t at_http_en_str[86] PROGMEM = { 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x3a, 0x20, 0x63, 0x6c, 0x6f, 0x73, 0x65, 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x2d, 0x54, 0x79, 0x70, 0x65, 0x3a, 0x20, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x78, 0x2d, 0x77, 0x77, 0x77, 0x2d, 0x66, 0x6f, 0x72, 0x6d, 0x2d, 0x75, 0x72, 0x6c, 0x65, 0x6e, 0x63, 0x6f, 0x64, 0x65, 0x64, 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x2d, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x3a, 0x20 };
+
 bool at_http_post(const char* host, uint16_t port, const char* path, const char* key_value_pairs, int* response_status, size_t* response_size, char** response)
 {
 	const size_t post_constant_data_size = 112;
@@ -698,18 +703,34 @@ bool at_http_post(const char* host, uint16_t port, const char* path, const char*
 	if (!at_tcp_connect(host, port))
 		return false;
 
- //const uint8_t p_post_str[5] PROGMEM = { 0x50, 0x4f, 0x53, 0x54, 0x20 };
- //const uint8_t p_host_str[17] PROGMEM = { 0x20, 0x48, 0x54, 0x54, 0x50, 0x2f, 0x31, 0x2e, 0x31, 0x0d, 0x0a, 0x48, 0x6f, 0x73, 0x74, 0x3a, 0x20 };
- //const uint8_t p_en_str[86] PROGMEM = { 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x69, 0x6f, 0x6e, 0x3a, 0x20, 0x63, 0x6c, 0x6f, 0x73, 0x65, 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x2d, 0x54, 0x79, 0x70, 0x65, 0x3a, 0x20, 0x61, 0x70, 0x70, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2f, 0x78, 0x2d, 0x77, 0x77, 0x77, 0x2d, 0x66, 0x6f, 0x72, 0x6d, 0x2d, 0x75, 0x72, 0x6c, 0x65, 0x6e, 0x63, 0x6f, 0x64, 0x65, 0x64, 0x0d, 0x0a, 0x43, 0x6f, 0x6e, 0x74, 0x65, 0x6e, 0x74, 0x2d, 0x4c, 0x65, 0x6e, 0x67, 0x74, 0x68, 0x3a, 0x20 };
-
-	memcpy(at_buffer, "POST ", 5);
-	memcpy(at_buffer + 5, path, post_path_length);
-	memcpy(at_buffer + 5 + post_path_length, " HTTP/1.1\r\nHost: ", 17);
-	memcpy(at_buffer + 5 + post_path_length + 17, host, post_host_length);
-	memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length, "\r\nConnection: close\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ", 86);
-	memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86, post_key_value_pair_length_string, post_key_value_pair_length_string_length);
-	memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length, "\r\n\r\n", 4);
-	memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length + 4, key_value_pairs, post_key_value_pair_length);
+  if ((uintptr_t)key_value_pairs == (uintptr_t)(at_buffer + 256))
+  {
+    memmove(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length + 4, key_value_pairs, post_key_value_pair_length);
+    memcpy_P(at_buffer, at_http_post_str, 5);
+    //memcpy(at_buffer, "POST ", 5);
+    memcpy(at_buffer + 5, path, post_path_length);
+    memcpy_P(at_buffer + 5 + post_path_length, at_http_host_str, 17);
+    //memcpy(at_buffer + 5 + post_path_length, " HTTP/1.1\r\nHost: ", 17);
+    memcpy(at_buffer + 5 + post_path_length + 17, host, post_host_length);
+    memcpy_P(at_buffer + 5 + post_path_length + 17 + post_host_length, at_http_en_str, 86);
+    //memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length, "\r\nConnection: close\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ", 86);
+    memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86, post_key_value_pair_length_string, post_key_value_pair_length_string_length);
+    memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length, "\r\n\r\n", 4);
+  }
+  else
+  {
+    memcpy_P(at_buffer, at_http_post_str, 5);
+    //memcpy(at_buffer, "POST ", 5);
+    memcpy(at_buffer + 5, path, post_path_length);
+    memcpy_P(at_buffer + 5 + post_path_length, at_http_host_str, 17);
+    //memcpy(at_buffer + 5 + post_path_length, " HTTP/1.1\r\nHost: ", 17);
+    memcpy(at_buffer + 5 + post_path_length + 17, host, post_host_length);
+    memcpy_P(at_buffer + 5 + post_path_length + 17 + post_host_length, at_http_en_str, 86);
+    //memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length, "\r\nConnection: close\r\nContent-Type: application/x-www-form-urlencoded\r\nContent-Length: ", 86);
+    memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86, post_key_value_pair_length_string, post_key_value_pair_length_string_length);
+    memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length, "\r\n\r\n", 4);
+    memcpy(at_buffer + 5 + post_path_length + 17 + post_host_length + 86 + post_key_value_pair_length_string_length + 4, key_value_pairs, post_key_value_pair_length);
+  }
 	if (!at_ip_send(post_length, at_buffer))
 	{
 		at_tcp_close();
@@ -741,6 +762,9 @@ bool at_http_post(const char* host, uint16_t port, const char* path, const char*
 		post_result[9] < '0' || post_result[9] > '9' || post_result[10] < '0' || post_result[10] > '9' || post_result[11] < '0' || post_result[11] > '9' ||
 		post_result[12] != ' ')
 	{
+#ifdef AT_UTIL_DEBUG_OUT
+  my_serial.print("\nHTTP HEADER INVALID 1\n");
+#endif
 		return false;
 	}
 	size_t result_header_size = (size_t)~0;
@@ -749,6 +773,9 @@ bool at_http_post(const char* host, uint16_t port, const char* path, const char*
 			result_header_size = i + 4;
 	if (result_header_size == (size_t)~0)
 	{
+#ifdef AT_UTIL_DEBUG_OUT
+  my_serial.print("\nHTTP HEADER INVALID 2\n");
+#endif
 		return false;
 	}
 
@@ -757,9 +784,11 @@ bool at_http_post(const char* host, uint16_t port, const char* path, const char*
 	*response_size = result_length - result_header_size;
 	*response = post_result;
 
-  //my_serial.print("\nHTTP STATUS RESPONSE: ");
-  //my_serial.print(*response_status);
-  //my_serial.print("\n");
+#ifdef AT_UTIL_DEBUG_OUT
+  my_serial.print("\nHTTP STATUS RESPONSE: ");
+  my_serial.print(*response_status);
+  my_serial.print("\n");
+#endif
 
 	return true;
 }
@@ -879,7 +908,183 @@ bool at_udp_send(const char* host, uint16_t port, size_t size, void* data)
 	return true;
 }
 
+static size_t decimal_encoding_length(size_t n)
+{
+  size_t length = 0;
+  do
+  {
+    ++length;
+    n /= (size_t)10;
+  } while (n);
+  return length;
+}
 
+const uint8_t at_print_float_min[13] PROGMEM = { 0x3c, 0x2d, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x2e, 0x30 };
+const uint8_t at_print_float_max[12] PROGMEM = { 0x3e, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x39, 0x2e, 0x30 };
+
+static size_t print_float(float value, size_t fraction_part_maximum_length, char* buffer)
+{
+  char* write = buffer;
+  if (value < 0.0f)
+  {
+    if (value < -999999999.0f)
+    {
+      /*
+      for (char* copy_source = (char*)"<-999999999.0", *copy_source_end = copy_source + 13, *copy_destination = buffer; copy_source != copy_source_end; ++copy_source, ++copy_destination)
+        *copy_destination = *copy_source;
+       */
+      memcpy_P(buffer, at_print_float_min, 13);
+      return 13;
+    }
+    value = -value;
+    *write++ = L'-';
+  }
+  else
+  {
+    if (value > 999999999.0f)
+    {
+      /*
+      for (char* copy_source = (char*)">999999999.0", *copy_source_end = copy_source + 12, *copy_destination = buffer; copy_source != copy_source_end; ++copy_source, ++copy_destination)
+        *copy_destination = *copy_source;
+      */
+      memcpy_P(buffer, at_print_float_max, 12);
+      return 12;
+    }
+  }
+  uint32_t wholePart = 1;
+  for (uint32_t powerOf10 = 10; wholePart != 9 && (uint32_t)(value / (float)powerOf10); powerOf10 *= 10)
+    ++wholePart;
+  uint32_t fractionPart = 9 - wholePart;
+  uint32_t decimalDigitMovingMultiplier = 1;
+  for (uint32_t i = 0; i != fractionPart; ++i)
+    decimalDigitMovingMultiplier *= 10;
+  uint32_t integer = (uint32_t)(value * (float)decimalDigitMovingMultiplier);
+  for (uint32_t i = wholePart - 1; i--;)
+    decimalDigitMovingMultiplier *= 10;
+  for (uint32_t i = wholePart; i--; decimalDigitMovingMultiplier /= 10)
+    *write++ = '0' + (char)((integer / decimalDigitMovingMultiplier) % 10);
+  *write++ = '.';
+  if (fractionPart)
+  {
+    uint32_t irrelevantZeroes = 0;
+    for (uint32_t n = fraction_part_maximum_length && fraction_part_maximum_length < (size_t)fractionPart ? (uint32_t)fraction_part_maximum_length : fractionPart, i = n; i--; decimalDigitMovingMultiplier /= 10)
+    {
+      char newDigit = '0' + (char)((integer / decimalDigitMovingMultiplier) % 10);
+      if (newDigit != '0' || i + 1 == n)
+        irrelevantZeroes = 0;
+      else
+        ++irrelevantZeroes;
+      *write++ = newDigit;
+    }
+    return ((size_t)((uintptr_t)write - (uintptr_t)buffer) / sizeof(char)) - (size_t)irrelevantZeroes;
+  }
+  else
+  {
+    *write++ = '0';
+    return (size_t)((uintptr_t)write - (uintptr_t)buffer) / sizeof(char);
+  }
+}
+
+//#include <SoftwareSerial.h>
+//SoftwareSerial my_serial(10, 11); // RX, TX
+
+bool inp_http_ask_measurement_interval(const char* host, const char* path, uint32_t station, uint32_t* interval)
+{
+  digitalWrite(GPRS_RESET_PIN, HIGH);
+  
+  char* station_id = at_buffer + 256;
+  memcpy(station_id, "idStation=", 10);
+  size_t station_length = 0;
+  for (uint32_t n = station; !station_length || n; n /= 10)
+    ++station_length;
+  for (size_t n = station, i = station_length; i--; n /= 10)
+    *(station_id + 10 + i) = '0' + (char)(n % 10);
+  station_id[10 + station_length] = 0;
+
+  
+  delay(1024);
+  digitalWrite(GPRS_RESET_PIN, LOW);
+  delay(8000);
+  
+  int response = -1;
+  size_t post_response_size;
+  char* post_response;
+
+  bool success = at_http_post(host, 80, path, station_id, &response, &post_response_size, &post_response);
+  if (!success || !post_response_size)
+    return false;
+
+  if (response < 200 || response > 299)
+    return false;
+
+  uint32_t t = 0;
+
+  for (size_t i = 0; i != post_response_size; ++i)
+    if (post_response[i] < '0' || post_response[i] > '9')
+      return false;
+    else
+      t = (t * 10) + (uint32_t)(post_response[i] - '0');
+    
+  *interval = t;
+  
+  return true;
+}
+
+bool inp_http_post_measurements(const char* host, const char* path, unsigned long station, float temperature, float humididy, float pressure, float illuminance)
+{
+  digitalWrite(GPRS_RESET_PIN, HIGH);
+   
+  size_t station_length = 0;
+  for (unsigned long n = station; !station_length || n; n /= (unsigned long)10)
+    ++station_length;
+  if (station_length > 10)
+  {
+    digitalWrite(GPRS_RESET_PIN, LOW);
+    return false;
+  }
+
+  char* post_key_value_pairs = at_buffer + 256;
+  
+  memcpy(post_key_value_pairs, "idStation=", 10);
+  for (size_t o = 10, n = station, i = station_length; i--; n /= 10)
+    *(post_key_value_pairs + o + i) = '0' + (char)(n % 10);
+  memcpy(post_key_value_pairs + 10 + station_length, "&temperature=", 13);
+  size_t temperature_length = print_float(temperature, 4, post_key_value_pairs + 10 + station_length + 13);
+  memcpy(post_key_value_pairs + 10 + station_length + 13 + temperature_length, "&humidity=", 10);
+  size_t humididy_length = print_float(humididy, 4, post_key_value_pairs + 10 + station_length + 13 + temperature_length + 10);
+  memcpy(post_key_value_pairs + 10 + station_length + 13 + temperature_length + 10 + humididy_length, "&pressure=", 10);
+  size_t pressure_length = print_float(pressure, 4, post_key_value_pairs + 10 + station_length + 13 + temperature_length + 10 + humididy_length + 10);
+  memcpy(post_key_value_pairs + 10 + station_length + 13 + temperature_length + 10 + humididy_length + 10 + pressure_length, "&illuminance=", 13);
+  size_t illuminance_length = print_float(illuminance, 4, post_key_value_pairs + 10 + station_length + 13 + temperature_length + 10 + humididy_length + 10 + pressure_length + 13);
+  post_key_value_pairs[10 + station_length + 13 +  temperature_length + 10 + humididy_length + 10 + pressure_length + 13 + illuminance_length] = 0;
+
+  delay(1024);
+  digitalWrite(GPRS_RESET_PIN, LOW);
+  delay(8000);
+  
+  int response = -1;
+  size_t post_response_size;
+  char* post_response;
+
+  //my_serial.print("post \"");
+  //my_serial.print(post_key_value_pairs);
+  //my_serial.print("\"\n");
+ 
+
+  bool success = at_http_post(host, 80, path, post_key_value_pairs, &response, &post_response_size, &post_response);
+  if (!success)
+  {
+     //my_serial.print("post error\n");
+    return false;
+  }
+
+  //my_serial.print("post ok\n");
+
+  if (response < 200 || response > 299)
+    return false;
+
+  return true;
+}
 
 
 
